@@ -300,11 +300,10 @@ if (input) {
     }
   };
 
-  isTasks()
+  isTasks();
 
   let taskCheck = function (task) {
     let warning = false;
-    console.log(localArray);
     for (let j = 0; j < localArray.length; j++) {
       if (
         task === localArray[j].text &&
@@ -320,9 +319,11 @@ if (input) {
   btnAdd.onclick = function () {
     task = input.value;
     input.value = "";
-    if (taskCheck(task) === false) {
-      addTask(task);
-    }
+    if (!localArray) {
+      if (taskCheck(task) === false) {
+        
+      }
+    } else addTask(task);
   };
 
   input.addEventListener("keypress", function (e) {
@@ -402,13 +403,17 @@ if (input) {
     return dataPage.textContent;
   };
 
-  localArray.forEach((item) => {
-    if (item.data === window.onload()) {
-      task = item.text;
-      done = item.done;
-      addTask(task, done);
-    }
-  });
+  window.onload();
+
+  if (localArray) {
+    localArray.forEach((item) => {
+      if (item.data === window.onload()) {
+        task = item.text;
+        done = item.done;
+        addTask(task, done);
+      }
+    });
+  }
 
   btnDataPrev.onclick = function () {
     localData.number = localData.number - 1;
