@@ -156,7 +156,7 @@ body {
   top: 3vh;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 28px;
+  font-size: calc(16px + 10 * (100vw - 320px) / 880);
   font-style: italic;
   font-weight: 600;
 }
@@ -183,6 +183,7 @@ body {
 }
 .tasks__data-text {
   color: rgb(73, 62, 73);
+  width: 25vw;
 }
 .tasks__inner {
   width: 80vw;
@@ -194,17 +195,18 @@ body {
   padding: 5vh 5vw;
 }
 .tasks input {
-  padding: 20px 30px;
+  padding: 2vw;
+  padding-left: 4vw;
   border-radius: 30px;
   width: 60vw;
   border: 1px solid plum;
-  font-size: 20px;
+  font-size: calc(14px + 10 * (100vw - 320px) / 880);
   outline: 0;
 }
 .tasks__btn-add {
   margin-left: 20px;
-  font-size: 20px;
-  padding: 20px;
+  font-size: calc(14px + 6 * (100vw - 320px) / 880);
+  padding: 2vw;
   border-radius: 30px;
   background-color: transparent;
   border: 1px solid rgb(155, 126, 155);
@@ -235,12 +237,12 @@ body {
 }
 .tasks__item {
   display: flex;
-  gap: 20px;
+  gap: 2vw;
   margin-bottom: 20px;
   padding-right: 5px;
 }
 .tasks__item button {
-  padding: 20px;
+  padding: 2vw;
   border-radius: 30px;
   background-color: transparent;
   border: 1px solid rgb(155, 126, 155);
@@ -256,16 +258,16 @@ body {
 }
 .tasks__item-text {
   width: 60vw;
-  font-size: 20px;
+  font-size: calc(14px + 6 * (100vw - 320px) / 880);
   font-weight: 600;
-  padding: 20px 30px;
+  padding: 2vw 3vw;
   border-radius: 30px;
   background-color: #fff;
   color: rgb(107, 72, 27);
   border: 1px solid rgba(224, 190, 146, 0.726);
 }
 .tasks__no-task {
-  max-width: 350px;
+  max-width: 40vw;
   margin: 0 auto;
   padding-top: 20vh;
   font-size: 30px;
@@ -334,7 +336,7 @@ body {
   margin-left: auto;
   padding: 10px 20px;
   border-radius: 30px;
-  font-size: 24px;
+  font-size: calc(18px + 6 * (100vw - 320px) / 880);
   font-style: italic;
   margin-top: 10px;
   cursor: pointer;
@@ -357,9 +359,77 @@ body {
   align-items: center;
 }
 .posts__data {
-  font-size: 24px;
+  font-size: calc(16px + 8 * (100vw - 320px) / 880);
   font-style: italic;
   font-weight: 600;
   padding-left: 20px;
   color: #6b5d44;
+}
+
+@media (width < 500px) {
+  .calendar {
+    padding-top: 17vh;
+  }
+  .calendar__inner {
+    margin-top: 2vh;
+    height: 50vh;
+    width: 90vw;
+  }
+  .calendar__days-item {
+    margin-top: 3vw;
+    padding: 2vw 1vw;
+  }
+  .calendar__days {
+    margin-top: 6vw;
+    row-gap: 5vw;
+  }
+  .calendar__day {
+    padding: 10px;
+    border-radius: 100%;
+  }
+  .tasks {
+    padding-top: 15vh;
+  }
+  .tasks__inner {
+    width: 90vw;
+    padding: 2vh 3vw;
+  }
+  .tasks__data {
+    top: 6vh;
+  }
+  .tasks__link-post {
+    top: -10vh;
+    right: 0;
+  }
+  .tasks__form {
+    display: flex;
+    align-items: center;
+  }
+  .tasks__item button {
+    padding: 0 6px;
+    border-radius: 100%;
+  }
+  .tasks svg,
+  .posts svg {
+    width: 30px;
+    height: 30px;
+  }
+  .tasks__item button svg {
+    width: 20px;
+    height: 20px;
+  }
+  .tasks__content {
+    margin-top: 20px;
+  }
+  .posts {
+    padding-top: 13vh;
+  }
+  .posts__link-calendar {
+    top: 5vh;
+    left: 17vw;
+  }
+  .posts__form {
+    width: 90vw;
+    padding: 2vh 3vw;
+  }
 }/*# sourceMappingURL=style.css.map */

@@ -340,10 +340,14 @@ if (input) {
     newTask.innerHTML = `
       <p class="tasks__item-text">${task}</p>
       <button class="tasks__btn-done" type="button">
-        <img src="./img/btn-done.svg" alt="">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="rgb(107, 72, 27)" height="24" viewBox="0 -960 960 960" width="24">
+        <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/>
+      </svg>
       </button>
       <button class="tasks__btn-delete" type="button">
-        <img src="./img/btn-delete.svg" alt="">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="rgb(107, 72, 27)" height="24" viewBox="0 -960 960 960" width="24">
+        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+      </svg>
       </button>
     `;
 
@@ -441,9 +445,9 @@ let localPosts = JSON.parse(localStorage.getItem("localPosts"));
 
 if (btnSave) {
   postData.textContent = localData.number + " " + localData.month;
-  
+
   let isPostRepeat = function () {
-    console.log(localPosts)
+    console.log(localPosts);
     let choosenPost;
     for (let i = 0; i < localPosts.length; i++) {
       if (
@@ -453,15 +457,15 @@ if (btnSave) {
         choosenPost = localPosts[i];
       }
     }
-    console.log(choosenPost)
+    console.log(choosenPost);
     return choosenPost;
   };
 
   if (localPosts && localPosts.length > 0) {
-    if (isPostRepeat() === undefined){
-      postTextHTML.textContent = '';
+    if (isPostRepeat() === undefined) {
+      postTextHTML.textContent = "";
     } else postTextHTML.textContent = isPostRepeat().post;
-  } 
+  }
 
   let postsArray = [];
   let changePost = function () {
@@ -486,6 +490,4 @@ if (btnSave) {
       }
     } else changePost();
   };
-
-
 }
