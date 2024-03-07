@@ -270,6 +270,7 @@ body {
 }
 .tasks__no-task {
   max-width: 40vw;
+  text-align: center;
   margin: 0 auto;
   padding-top: 20vh;
   font-size: 30px;
