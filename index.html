@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="index.js" defer></script>
+  <title>myDiary</title>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header__inner">
+        <nav class="menu">
+          <ul class="menu__list">
+            <li class="menu__list-item">
+              <a class="menu__link" href="posts.html">Дневник</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main class="main">
+    <div class="calendar">
+      <div class="calendar__data">
+        <span class="calendar__year">2024</span>
+        <div class="calendar__month-wrap">
+          <button class="calendar__month-prev">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+              <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
+            </svg>
+          </button>
+          <span class="calendar__month"></span>
+          <button class="calendar__month-next">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+              <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="calendar__inner">
+        <div class="calendar__days-name">
+          <div class="calendar__days-item">
+            <span class="calendar__day-name">Понедельник</span>
+            <span class="calendar__name-cut display-none">Пн</span>
+          </div>
+          <div class="calendar__days-item">
+            <span class="calendar__day-name">Вторник</span>
+            <span class="calendar__name-cut display-none">Вт</span>
+          </div>
+          <div class="calendar__days-item">
+            <span class="calendar__day-name">Среда</span>
+            <span class="calendar__name-cut display-none">Ср</span>
+          </div>
+          <div class="calendar__days-item">
+            <span class="calendar__day-name">Четверг</span>
+            <span class="calendar__name-cut display-none">Чт</span>
+          </div>
+          <div class="calendar__days-item">
+            <span class="calendar__day-name">Пятница</span>
+            <span class="calendar__name-cut display-none">Пт</span>
+          </div>
+          <div class="calendar__days-item">
+            <span class="calendar__day-name">Суббота</span>
+            <span class="calendar__name-cut display-none">Сб</span>
+          </div>
+          <div class="calendar__days-item">
+            <span class="calendar__day-name">Воскресенье</span>
+            <span class="calendar__name-cut display-none">Вс</span>
+          </div>
+        </div>
+        <div class="calendar__days">
+          
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
