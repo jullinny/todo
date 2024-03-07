@@ -290,7 +290,7 @@ if (input) {
   let noTask = document.createElement("div");
 
   let isTasks = function () {
-    if (localArray.length === 0) {
+    if (localArray && localArray.length === 0) {
       noTask.classList.add("tasks__no-task");
       noTask.innerHTML = `Задач на сегодня нет`;
       tasksContentHTML.appendChild(noTask);
@@ -321,7 +321,7 @@ if (input) {
     input.value = "";
     if (!localArray) {
       if (taskCheck(task) === false) {
-        
+        addTask(task);
       }
     } else addTask(task);
   };
