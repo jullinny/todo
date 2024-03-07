@@ -355,11 +355,16 @@ if (input) {
     };
 
     let someArray = [];
-    if (taskCheck(task) === false) {
+    if (!localArray) {
       someArray.push(taskObj);
       localStorage.setItem("array", JSON.stringify(someArray));
-      localArray.push(taskObj);
-      localStorage.setItem("array", JSON.stringify(localArray));
+    } else {
+      if (taskCheck(task) === false) {
+        someArray.push(taskObj);
+        localStorage.setItem("array", JSON.stringify(someArray));
+        localArray.push(taskObj);
+        localStorage.setItem("array", JSON.stringify(localArray));
+      }
     }
 
     isTasks();
