@@ -184,11 +184,12 @@ body {
 }
 .tasks__data-text {
   color: rgb(73, 62, 73);
-  width: 25vw;
+  width: 20vw;
+  text-align: center;
 }
 .tasks__inner {
   width: 80vw;
-  height: 70vh;
+  height: 80vh;
   margin: 0 auto;
   border: 2px solid rgba(110, 93, 110, 0.719);
   border-radius: 30px;
@@ -196,7 +197,7 @@ body {
   padding: 5vh 5vw;
 }
 .tasks input {
-  padding: 2vw;
+  padding: 1.5vw;
   padding-left: 4vw;
   border-radius: 30px;
   width: 60vw;
@@ -207,7 +208,7 @@ body {
 .tasks__btn-add {
   margin-left: 20px;
   font-size: calc(14px + 6 * (100vw - 320px) / 880);
-  padding: 2vw;
+  padding: 1.5vw;
   border-radius: 30px;
   background-color: transparent;
   border: 1px solid rgb(155, 126, 155);
@@ -243,7 +244,7 @@ body {
   padding-right: 5px;
 }
 .tasks__item button {
-  padding: 2vw;
+  padding: 1.5vw;
   border-radius: 30px;
   background-color: transparent;
   border: 1px solid rgb(155, 126, 155);
@@ -261,7 +262,7 @@ body {
   width: 60vw;
   font-size: calc(14px + 6 * (100vw - 320px) / 880);
   font-weight: 600;
-  padding: 2vw 3vw;
+  padding: 1.5vw 2vw;
   border-radius: 30px;
   background-color: #fff;
   color: rgb(107, 72, 27);
@@ -309,7 +310,7 @@ body {
 }
 .posts__form {
   width: 80vw;
-  height: 77vh;
+  height: 80vh;
   margin: 0 auto;
   border: 2px solid rgba(110, 93, 110, 0.719);
   border-radius: 30px;
@@ -393,6 +394,7 @@ body {
   }
   .tasks__inner {
     width: 90vw;
+    height: 70vh;
     padding: 2vh 3vw;
   }
   .tasks__data {
@@ -431,6 +433,7 @@ body {
   }
   .posts__form {
     width: 90vw;
+    height: 77vh;
     padding: 2vh 3vw;
   }
 }/*# sourceMappingURL=style.css.map */
