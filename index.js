@@ -7,15 +7,11 @@ let monthHTML = document.querySelector(".calendar__month");
 let buttonPrev = document.querySelector(".calendar__month-prev");
 let buttonNext = document.querySelector(".calendar__month-next");
 let dataPage = document.querySelector(".tasks__data-text");
-
-let localArray = JSON.parse(localStorage.getItem("array"));
 let input = document.querySelector(".tasks__input");
 let localData = JSON.parse(localStorage.getItem("dayLink"));
-
 let postsArray = [];
-let localPosts = JSON.parse(localStorage.getItem("localPosts"));
-let postText;
 
+let postText;
 const arrayofDaysDesc = [];
 
 const months = [
@@ -108,14 +104,13 @@ const months = [
 // распределение дней по месяцам
 
 if (year) {
-
-  if (document.documentElement.clientWidth < 1008){
+  if (document.documentElement.clientWidth < 1008) {
     for (let i = 0; i < weekDayNameFull.length; i++) {
-       weekDayNameFull[i].classList.add("display-none");
-       weekDayNameCut[i].classList.remove("display-none");
+      weekDayNameFull[i].classList.add("display-none");
+      weekDayNameCut[i].classList.remove("display-none");
     }
   }
-   
+
   let today = new Date();
   let todayDate = today.getDate();
   let todayMonthNumber = today.getMonth();
@@ -203,8 +198,6 @@ if (year) {
     }
   };
 
-  console.log(localArray);
-
   let createDay = function () {
     months.forEach((item) => {
       if (monthHTML.textContent === item.monthRu) {
@@ -280,8 +273,8 @@ if (year) {
     }
   };
 }
+localArray = JSON.parse(localStorage.getItem("array"));
 
-console.log(localData);
 if (input) {
   let tasksContentHTML = document.querySelector(".tasks__content");
   let btnAdd = document.querySelector(".tasks__btn-add");
@@ -297,27 +290,30 @@ if (input) {
   let noTask = document.createElement("div");
 
   let isTasks = function () {
-    if (localArray.length <= 0) {
+    if (localArray.length === 0) {
       noTask.classList.add("tasks__no-task");
       noTask.innerHTML = `Задач на сегодня нет`;
       tasksContentHTML.appendChild(noTask);
       noTask.classList.remove("display-none");
+    } else {
+      noTask.classList.add("display-none");
     }
   };
 
-  isTasks();
+  isTasks()
 
   let taskCheck = function (task) {
     let warning = false;
+    console.log(localArray);
     for (let j = 0; j < localArray.length; j++) {
       if (
         task === localArray[j].text &&
         localArray[j].data === dataPage.textContent
       ) {
-        console.log(task, localArray[j].data);
         warning = true;
       }
     }
+    console.log(warning);
     return warning;
   };
 
@@ -348,6 +344,7 @@ if (input) {
         <img src="./img/btn-delete.svg" alt="">
       </button>
     `;
+
     tasksContentHTML.prepend(newTask);
 
     let taskObj = {
@@ -356,10 +353,15 @@ if (input) {
       done: done,
     };
 
+    let someArray = [];
     if (taskCheck(task) === false) {
+      someArray.push(taskObj);
+      localStorage.setItem("array", JSON.stringify(someArray));
       localArray.push(taskObj);
       localStorage.setItem("array", JSON.stringify(localArray));
     }
+
+    isTasks();
 
     let btnDone = document.querySelector(".tasks__btn-done");
     let taskText = document.querySelector(".tasks__item-text");
@@ -385,13 +387,6 @@ if (input) {
     };
 
     isDone(taskObj, taskText);
-    isNoTasks();
-  };
-
-  let isNoTasks = function () {
-    if (localArray.length > 0) {
-      noTask.classList.add("display-none");
-    }
   };
 
   let isDone = function (taskObj, taskText) {
@@ -431,9 +426,9 @@ if (input) {
 let btnSave = document.querySelector(".posts__button-save");
 let postTextHTML = document.querySelector(".posts__textarea");
 let postData = document.querySelector(".posts__data");
+let localPosts = JSON.parse(localStorage.getItem("localPosts"));
 
 if (btnSave) {
-
   postData.textContent = localData.number + " " + localData.month;
 
   let isPostRepeat = function () {
@@ -449,10 +444,15 @@ if (btnSave) {
     return choosenPost;
   };
 
-  postTextHTML.textContent = isPostRepeat().post
+  if (localPosts.length > 0) {
+    postTextHTML.textContent = isPostRepeat().post;
+  }
 
   let changePost = function () {
     if (isPostRepeat() === undefined) {
+      let postsArray = [];
+      postsArray.push(localData);
+      localStorage.setItem("localPosts", JSON.stringify(postsArray));
       localPosts.push(localData);
       localStorage.setItem("localPosts", JSON.stringify(localPosts));
       console.log(localPosts);
@@ -461,8 +461,6 @@ if (btnSave) {
       localStorage.setItem("localPosts", JSON.stringify(localPosts));
     }
   };
-  // localPosts = [];
-  //     localStorage.setItem('localPosts', JSON.stringify(localPosts));
 
   btnSave.onclick = function () {
     localData.post = postTextHTML.value;
@@ -470,9 +468,6 @@ if (btnSave) {
     if (localPosts.length === 0) {
       localPosts.push(localData);
       localStorage.setItem("localPosts", JSON.stringify(localPosts));
-      console.log(postsArray, localPosts);
     } else changePost();
   };
 }
-
-console.log(postsArray, localPosts);
