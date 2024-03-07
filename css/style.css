@@ -55,7 +55,8 @@ body {
 }
 
 .main {
-  height: 100vh;
+  overflow-y: hidden;
+  height: 100svh;
   background-image: url(../img/bg.jpg);
   background-repeat: no-repeat;
   background-position: center;

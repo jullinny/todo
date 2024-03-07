@@ -14,6 +14,9 @@ let postsArray = [];
 let postText;
 const arrayofDaysDesc = [];
 
+const pageHeight = document.documentElement.scrollHeight;
+console.log(pageHeight)
+
 const months = [
   {
     monthRu: "Январь",
