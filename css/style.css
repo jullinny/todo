@@ -188,7 +188,7 @@ body {
 }
 .tasks__inner {
   width: 80vw;
-  height: 80vh;
+  height: 70vh;
   margin: 0 auto;
   border: 2px solid rgba(110, 93, 110, 0.719);
   border-radius: 30px;
@@ -279,7 +279,7 @@ body {
 
 .posts {
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
   background-image: url(../img/posts-bg.jpg);
   background-repeat: no-repeat;
   background-position: center;
@@ -309,7 +309,7 @@ body {
 }
 .posts__form {
   width: 80vw;
-  height: 80vh;
+  height: 77vh;
   margin: 0 auto;
   border: 2px solid rgba(110, 93, 110, 0.719);
   border-radius: 30px;
@@ -323,9 +323,9 @@ body {
   background-color: rgba(255, 255, 255, 0.1725490196);
   border-radius: 30px;
   resize: none;
-  padding: 25px;
+  padding: 3vw;
   outline: 0;
-  font-size: 26px;
+  font-size: calc(18px + 6 * (100vw - 320px) / 880);
   font-weight: 500;
   line-height: 1.25;
   font-style: italic;
