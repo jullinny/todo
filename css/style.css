@@ -132,7 +132,7 @@ body {
 }
 
 .tasks {
-  height: 100vh;
+  height: 100svh;
   padding-top: 10vh;
 }
 .tasks__body {
