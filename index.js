@@ -273,6 +273,7 @@ if (year) {
     }
   };
 }
+
 localArray = JSON.parse(localStorage.getItem("array"));
 
 if (input) {
@@ -319,7 +320,7 @@ if (input) {
   btnAdd.onclick = function () {
     task = input.value;
     input.value = "";
-    if (!localArray) {
+    if (localArray) {
       if (taskCheck(task) === false) {
         addTask(task);
       }
@@ -440,8 +441,9 @@ let localPosts = JSON.parse(localStorage.getItem("localPosts"));
 
 if (btnSave) {
   postData.textContent = localData.number + " " + localData.month;
-
+  
   let isPostRepeat = function () {
+    console.log(localPosts)
     let choosenPost;
     for (let i = 0; i < localPosts.length; i++) {
       if (
@@ -451,18 +453,19 @@ if (btnSave) {
         choosenPost = localPosts[i];
       }
     }
+    console.log(choosenPost)
     return choosenPost;
   };
 
-  if (localPosts.length > 0) {
-    postTextHTML.textContent = isPostRepeat().post;
-  }
+  if (localPosts && localPosts.length > 0) {
+    if (isPostRepeat() === undefined){
+      postTextHTML.textContent = '';
+    } else postTextHTML.textContent = isPostRepeat().post;
+  } 
 
+  let postsArray = [];
   let changePost = function () {
     if (isPostRepeat() === undefined) {
-      let postsArray = [];
-      postsArray.push(localData);
-      localStorage.setItem("localPosts", JSON.stringify(postsArray));
       localPosts.push(localData);
       localStorage.setItem("localPosts", JSON.stringify(localPosts));
       console.log(localPosts);
@@ -474,10 +477,15 @@ if (btnSave) {
 
   btnSave.onclick = function () {
     localData.post = postTextHTML.value;
-
-    if (localPosts.length === 0) {
-      localPosts.push(localData);
-      localStorage.setItem("localPosts", JSON.stringify(localPosts));
+    if (postsArray.length === 0) {
+      postsArray.push(localData);
+      localStorage.setItem("localPosts", JSON.stringify(postsArray));
+      if (localPosts) {
+        localPosts.push(localData);
+        localStorage.setItem("localPosts", JSON.stringify(localPosts));
+      }
     } else changePost();
   };
+
+
 }

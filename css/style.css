@@ -98,6 +98,7 @@ body {
   fill: #a520ca;
   height: calc(14px + 8 * (100vw - 320px) / 880);
   width: calc(14px + 8 * (100vw - 320px) / 880);
+  cursor: pointer;
 }
 .calendar__days-name {
   display: grid;
