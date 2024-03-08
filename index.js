@@ -311,7 +311,7 @@ if (input) {
     for (let j = 0; j < localArray.length; j++) {
       if (
         task === localArray[j].text &&
-        localArray[j].data === dataPage.textContent
+        localArray[j].data === dataPage.textContent 
       ) {
         warning = true;
       }
@@ -324,7 +324,7 @@ if (input) {
     task = input.value;
     input.value = "";
     if (localArray) {
-      if (taskCheck(task) === false) {
+      if (taskCheck(task) === false && task !== "") {
         addTask(task);
       }
     } else addTask(task);
@@ -337,22 +337,26 @@ if (input) {
     }
   });
 
+  let createNewTask = function(task){
+    return `
+    <p class="tasks__item-text">${task}</p>
+    <button class="tasks__btn-done" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="rgb(107, 72, 27)" height="24" viewBox="0 -960 960 960" width="24">
+      <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/>
+    </svg>
+    </button>
+    <button class="tasks__btn-delete" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="rgb(107, 72, 27)" height="24" viewBox="0 -960 960 960" width="24">
+      <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+    </svg>
+    </button>
+  `
+  }
+
   let addTask = function (task, done = false) {
     let newTask = document.createElement("div");
     newTask.classList.add("tasks__item");
-    newTask.innerHTML = `
-      <p class="tasks__item-text">${task}</p>
-      <button class="tasks__btn-done" type="button">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="rgb(107, 72, 27)" height="24" viewBox="0 -960 960 960" width="24">
-        <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/>
-      </svg>
-      </button>
-      <button class="tasks__btn-delete" type="button">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="rgb(107, 72, 27)" height="24" viewBox="0 -960 960 960" width="24">
-        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
-      </svg>
-      </button>
-    `;
+    newTask.innerHTML = createNewTask(task);
 
     tasksContentHTML.prepend(newTask);
 
