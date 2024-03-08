@@ -239,6 +239,7 @@ body {
 }
 .tasks__item {
   display: flex;
+  align-items: center;
   gap: 2vw;
   margin-bottom: 20px;
   padding-right: 5px;
@@ -369,7 +370,36 @@ body {
   color: #6b5d44;
 }
 
+.allPosts__body {
+  background-image: url(../img/allPosts-bg.jpg);
+}
+.allPosts__inner {
+  padding: 2vw;
+  padding-right: 1vw;
+}
+.allPosts__content {
+  height: 70vh;
+  overflow-y: auto;
+  padding-right: 1vw;
+}
+.allPosts__item {
+  display: block;
+  width: 100%;
+  padding: 1.5vw;
+  border-radius: 30px;
+  border: 2px solid rgba(110, 93, 110, 0.719);
+  font-size: 26px;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  color: #1a0c01;
+  margin-bottom: 2vh;
+}
+
 @media (width < 500px) {
+  .main {
+    background-image: url(../img/bg-phone.jpg);
+  }
   .calendar {
     padding-top: 17vh;
   }
@@ -410,7 +440,7 @@ body {
     align-items: center;
   }
   .tasks__item button {
-    padding: 0 6px;
+    padding: 5px;
     border-radius: 100%;
   }
   .tasks svg,

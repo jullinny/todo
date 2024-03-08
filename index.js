@@ -15,7 +15,7 @@ let postText;
 const arrayofDaysDesc = [];
 
 const pageHeight = document.documentElement.scrollHeight;
-console.log(pageHeight)
+console.log(pageHeight);
 
 const months = [
   {
@@ -311,7 +311,7 @@ if (input) {
     for (let j = 0; j < localArray.length; j++) {
       if (
         task === localArray[j].text &&
-        localArray[j].data === dataPage.textContent 
+        localArray[j].data === dataPage.textContent
       ) {
         warning = true;
       }
@@ -337,7 +337,7 @@ if (input) {
     }
   });
 
-  let createNewTask = function(task){
+  let createNewTask = function (task) {
     return `
     <p class="tasks__item-text">${task}</p>
     <button class="tasks__btn-done" type="button">
@@ -350,8 +350,8 @@ if (input) {
       <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
     </svg>
     </button>
-  `
-  }
+  `;
+  };
 
   let addTask = function (task, done = false) {
     let newTask = document.createElement("div");
@@ -448,13 +448,14 @@ if (input) {
 let btnSave = document.querySelector(".posts__button-save");
 let postTextHTML = document.querySelector(".posts__textarea");
 let postData = document.querySelector(".posts__data");
+
 let localPosts = JSON.parse(localStorage.getItem("localPosts"));
 
 if (btnSave) {
   postData.textContent = localData.number + " " + localData.month;
 
   let isPostRepeat = function () {
-    console.log(localPosts);
+    console.log(localPosts, localData);
     let choosenPost;
     for (let i = 0; i < localPosts.length; i++) {
       if (
@@ -476,12 +477,14 @@ if (btnSave) {
 
   let postsArray = [];
   let changePost = function () {
+    console.log(isPostRepeat());
     if (isPostRepeat() === undefined) {
       localPosts.push(localData);
       localStorage.setItem("localPosts", JSON.stringify(localPosts));
       console.log(localPosts);
     } else {
       isPostRepeat().post = localData.post;
+
       localStorage.setItem("localPosts", JSON.stringify(localPosts));
     }
   };
@@ -497,4 +500,48 @@ if (btnSave) {
       }
     } else changePost();
   };
+}
+
+let allPosts = document.querySelector(".allPosts__content");
+
+if (allPosts) {
+  console.log(localData);
+
+  let createOnePost = function (data, month, post) {
+    let onePost = document.createElement("div");
+    onePost.innerHTML = `
+      <a class="allPosts__item" href="posts.html">
+        <span class="allPosts__item-data">
+          <strong>${data}</strong></span>
+        <span class="allPosts__item-month">
+          <strong>${month}</strong></span>
+        ${post}
+      </a>
+    `;
+    allPosts.prepend(onePost);
+  };
+
+  for (let i = 0; i < localPosts.length; i++) {
+    createOnePost(
+      localPosts[i].number,
+      localPosts[i].month,
+      localPosts[i].post
+    );
+  }
+
+  let shortPost = document.querySelectorAll(".allPosts__item");
+ 
+  console.log(shortPost, postData);
+
+  for (let j = 0; j < shortPost.length; j++) {
+    shortPost[j].onclick = function () { 
+      let postData = document.querySelectorAll(".allPosts__item-data");
+      let postMonth = document.querySelectorAll(".allPosts__item-month");
+
+      localData.number = Number(postData[j].textContent.trim());
+      localData.month = postMonth[j].textContent.trim();
+      localStorage.setItem("dayLink", JSON.stringify(localData));
+      console.log(localData);
+    };
+  }
 }
