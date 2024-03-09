@@ -289,7 +289,7 @@ body {
   background-size: cover;
   padding: 10vh 0;
 }
-.posts__link-back, .posts__link-calendar {
+.posts__link-back, .posts__link-calendar, .posts__link-allposts {
   position: absolute;
   top: 5vh;
   left: 3vw;
@@ -298,17 +298,20 @@ body {
   border: 3px solid rgba(163, 138, 100, 0.541);
   transition: all 0.2s linear;
 }
-.posts__link-back svg, .posts__link-calendar svg {
+.posts__link-back svg, .posts__link-calendar svg, .posts__link-allposts svg {
   fill: rgba(78, 60, 33, 0.719);
 }
-.posts__link-back:hover svg, .posts__link-calendar:hover svg {
+.posts__link-back:hover svg, .posts__link-calendar:hover svg, .posts__link-allposts:hover svg {
   fill: rgba(78, 60, 33, 0.856);
 }
-.posts__link-back:hover, .posts__link-calendar:hover {
+.posts__link-back:hover, .posts__link-calendar:hover, .posts__link-allposts:hover {
   border: 3px solid rgba(126, 108, 80, 0.712);
 }
 .posts__link-calendar {
   top: 13vh;
+}
+.posts__link-allposts {
+  top: 21vh;
 }
 .posts__form {
   width: 80vw;
@@ -388,7 +391,7 @@ body {
   padding: 1.5vw;
   border-radius: 30px;
   border: 2px solid rgba(110, 93, 110, 0.719);
-  font-size: 26px;
+  font-size: calc(18px + 8 * (100vw - 320px) / 880);
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
@@ -422,6 +425,9 @@ body {
   }
   .tasks {
     padding-top: 15vh;
+  }
+  .tasks__body {
+    background-image: url(../img/bg2-phone.jpg);
   }
   .tasks__inner {
     width: 90vw;
@@ -457,14 +463,22 @@ body {
   }
   .posts {
     padding-top: 13vh;
+    background-image: url(../img/posts-bg-phone.jpg);
   }
   .posts__link-calendar {
     top: 5vh;
     left: 17vw;
   }
+  .posts__link-allposts {
+    top: 5vh;
+    left: 31vw;
+  }
   .posts__form {
     width: 90vw;
     height: 77vh;
     padding: 2vh 3vw;
+  }
+  .allPosts__body {
+    background-image: url(../img/allPosts-bg-phone.jpg);
   }
 }/*# sourceMappingURL=style.css.map */

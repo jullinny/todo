@@ -294,11 +294,13 @@ if (input) {
   let noTask = document.createElement("div");
 
   let isTasks = function () {
+    console.log(localArray)
     if (localArray && localArray.length === 0) {
       noTask.classList.add("tasks__no-task");
       noTask.innerHTML = `Задач на сегодня нет`;
       tasksContentHTML.appendChild(noTask);
       noTask.classList.remove("display-none");
+      
     } else {
       noTask.classList.add("display-none");
     }
@@ -428,6 +430,9 @@ if (input) {
         task = item.text;
         done = item.done;
         addTask(task, done);
+      } else {
+        localArray = [];
+        isTasks(localArray);
       }
     });
   }
@@ -520,7 +525,7 @@ if (allPosts) {
     `;
     allPosts.prepend(onePost);
   };
-
+console.log(localPosts);
   for (let i = 0; i < localPosts.length; i++) {
     createOnePost(
       localPosts[i].number,
@@ -545,3 +550,4 @@ if (allPosts) {
     };
   }
 }
+
