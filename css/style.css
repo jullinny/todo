@@ -41,19 +41,6 @@ body {
   font-weight: 600;
 }
 
-.menu__list {
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
-  color: rgb(104, 41, 104);
-}
-.menu__link {
-  color: inherit;
-}
-.menu__link:hover {
-  color: #8045bb;
-}
-
 .main {
   overflow-y: hidden;
   height: 100svh;
@@ -423,8 +410,27 @@ body {
     padding: 10px;
     border-radius: 100%;
   }
+  .calendar__day:hover {
+    color: antiquewhite;
+    border: 3px solid #a520ca;
+    padding: 8px 0 5px;
+    font-weight: 400;
+  }
   .tasks {
     padding-top: 15vh;
+  }
+  .tasks__data-prev:hover {
+    transform: translateX(0px);
+  }
+  .tasks__data-next:hover {
+    transform: translateX(0px);
+  }
+  .tasks__btn-add:hover {
+    background-color: transparent;
+  }
+  .tasks__btn-add:active {
+    transform: scale(1);
+    background-color: transparent;
   }
   .tasks__body {
     background-image: url(../img/bg2-phone.jpg);
@@ -437,6 +443,9 @@ body {
   .tasks__data {
     top: 6vh;
   }
+  .tasks__data-btn:hover {
+    transform: translateX(0px);
+  }
   .tasks__link-post {
     top: -10vh;
     right: 0;
@@ -448,6 +457,13 @@ body {
   .tasks__item button {
     padding: 5px;
     border-radius: 100%;
+  }
+  .tasks__item button:hover {
+    background-color: transparent;
+  }
+  .tasks__item button:active {
+    transform: scale(1);
+    background-color: transparent;
   }
   .tasks svg,
   .posts svg {
@@ -465,6 +481,14 @@ body {
     padding-top: 13vh;
     background-image: url(../img/posts-bg-phone.jpg);
   }
+  .posts__button-save:hover {
+    background-color: rgba(219, 207, 184, 0.5568627451);
+    color: #6b502e;
+  }
+  .posts__button-save:active {
+    transform: scale(1);
+    background-color: rgba(219, 207, 184, 0.5568627451);
+  }
   .posts__link-calendar {
     top: 5vh;
     left: 17vw;
@@ -480,5 +504,9 @@ body {
   }
   .allPosts__body {
     background-image: url(../img/allPosts-bg-phone.jpg);
+  }
+  .tasks__no-task {
+    max-width: 65vw;
+    font-size: 20px;
   }
 }/*# sourceMappingURL=style.css.map */

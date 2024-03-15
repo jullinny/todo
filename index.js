@@ -395,7 +395,7 @@ if (input) {
     };
 
     btnDelete.onclick = function () {
-      let index = allTasksArray.indexOf(taskObj);
+      let index = allTasksArray.findIndex((el) => el.text === task);
       allTasksArray.splice(index, 1);
       localStorage.setItem("array", JSON.stringify(allTasksArray));
       newTask.remove();
