@@ -1,6 +1,5 @@
 let weekDayNameFull = document.querySelectorAll(".calendar__day-name");
 let weekDayNameCut = document.querySelectorAll(".calendar__name-cut");
-
 let daysHTML = document.querySelector(".calendar__days");
 let year = document.querySelector(".calendar__year");
 let monthHTML = document.querySelector(".calendar__month");
@@ -10,12 +9,9 @@ let dataPage = document.querySelector(".tasks__data-text");
 let input = document.querySelector(".tasks__input");
 let localData = JSON.parse(localStorage.getItem("dayLink"));
 let postsArray = [];
-
 let postText;
 const arrayofDaysDesc = [];
-
 const pageHeight = document.documentElement.scrollHeight;
-console.log(pageHeight);
 
 const months = [
   {
@@ -104,7 +100,7 @@ const months = [
   },
 ];
 
-// распределение дней по месяцам
+// изменение краткой/полной формы названия дней недели
 
 if (year) {
   if (document.documentElement.clientWidth < 1008) {
@@ -113,6 +109,8 @@ if (year) {
       weekDayNameCut[i].classList.remove("display-none");
     }
   }
+
+// определение количества дней в месяце
 
   let today = new Date();
   let todayDate = today.getDate();
@@ -159,7 +157,7 @@ if (year) {
     }
   });
 
-  // автоматическое установление месяца и сдвиг дат в календаре
+  // автоматическая отрисовка календаря 
 
   months.forEach((item) => {
     if (item.id === todayMonthNumber) {
@@ -183,11 +181,10 @@ if (year) {
     }
   };
 
-  let createDayDesc = function (day, item, postText) {
+  let createDayDesc = function (day, item) {
     return (objOfDayDesc = {
       number: day,
       month: item.monthToTask,
-      post: postText,
     });
   };
 
@@ -277,7 +274,7 @@ if (year) {
   };
 }
 
-localArray = JSON.parse(localStorage.getItem("array"));
+allTasksArray = JSON.parse(localStorage.getItem("array"));
 
 if (input) {
   let tasksContentHTML = document.querySelector(".tasks__content");
@@ -286,7 +283,7 @@ if (input) {
   let btnDataPrev = document.querySelector(".tasks__data-prev");
   let btnDataNext = document.querySelector(".tasks__data-next");
 
-  form.addEventListener("submit", function (e) {
+  form.addEventListener("submit", function (event) {
     event.preventDefault();
   });
 
@@ -294,8 +291,7 @@ if (input) {
   let noTask = document.createElement("div");
 
   let isTasks = function () {
-    console.log(localArray)
-    if (localArray && localArray.length === 0) {
+    if (allTasksArray && allTasksArray.length === 0) {
       noTask.classList.add("tasks__no-task");
       noTask.innerHTML = `Задач на сегодня нет`;
       tasksContentHTML.appendChild(noTask);
@@ -310,10 +306,10 @@ if (input) {
 
   let taskCheck = function (task) {
     let warning = false;
-    for (let j = 0; j < localArray.length; j++) {
+    for (let j = 0; j < allTasksArray.length; j++) {
       if (
-        task === localArray[j].text &&
-        localArray[j].data === dataPage.textContent
+        task === allTasksArray[j].text &&
+        allTasksArray[j].data === dataPage.textContent
       ) {
         warning = true;
       }
@@ -325,7 +321,7 @@ if (input) {
   btnAdd.onclick = function () {
     task = input.value;
     input.value = "";
-    if (localArray) {
+    if (allTasksArray) {
       if (taskCheck(task) === false && task !== "") {
         addTask(task);
       }
@@ -369,15 +365,15 @@ if (input) {
     };
 
     let someArray = [];
-    if (!localArray) {
+    if (!allTasksArray) {
       someArray.push(taskObj);
       localStorage.setItem("array", JSON.stringify(someArray));
     } else {
       if (taskCheck(task) === false) {
         someArray.push(taskObj);
         localStorage.setItem("array", JSON.stringify(someArray));
-        localArray.push(taskObj);
-        localStorage.setItem("array", JSON.stringify(localArray));
+        allTasksArray.push(taskObj);
+        localStorage.setItem("array", JSON.stringify(allTasksArray));
       }
     }
 
@@ -389,19 +385,19 @@ if (input) {
 
     btnDone.onclick = function () {
       taskText.classList.toggle("line-through");
-      let index = localArray.findIndex((el) => el.text === task);
+      let index = allTasksArray.findIndex((el) => el.text === task);
       if (taskText.classList.contains("line-through")) {
-        localArray[index].done = true;
+        allTasksArray[index].done = true;
       } else {
-        localArray[index].done = false;
+        allTasksArray[index].done = false;
       }
-      localStorage.setItem("array", JSON.stringify(localArray));
+      localStorage.setItem("array", JSON.stringify(allTasksArray));
     };
 
     btnDelete.onclick = function () {
-      let index = localArray.indexOf(taskObj);
-      localArray.splice(index, 1);
-      localStorage.setItem("array", JSON.stringify(localArray));
+      let index = allTasksArray.indexOf(taskObj);
+      allTasksArray.splice(index, 1);
+      localStorage.setItem("array", JSON.stringify(allTasksArray));
       newTask.remove();
       isTasks();
     };
@@ -424,15 +420,15 @@ if (input) {
 
   window.onload();
 
-  if (localArray) {
-    localArray.forEach((item) => {
+  if (allTasksArray) {
+    allTasksArray.forEach((item) => {
       if (item.data === window.onload()) {
         task = item.text;
         done = item.done;
         addTask(task, done);
       } else {
-        localArray = [];
-        isTasks(localArray);
+        allTasksArray = [];
+        isTasks(allTasksArray);
       }
     });
   }
@@ -460,7 +456,6 @@ if (btnSave) {
   postData.textContent = localData.number + " " + localData.month;
 
   let isPostRepeat = function () {
-    console.log(localPosts, localData);
     let choosenPost;
     for (let i = 0; i < localPosts.length; i++) {
       if (
@@ -470,7 +465,6 @@ if (btnSave) {
         choosenPost = localPosts[i];
       }
     }
-    console.log(choosenPost);
     return choosenPost;
   };
 
@@ -486,10 +480,8 @@ if (btnSave) {
     if (isPostRepeat() === undefined) {
       localPosts.push(localData);
       localStorage.setItem("localPosts", JSON.stringify(localPosts));
-      console.log(localPosts);
     } else {
       isPostRepeat().post = localData.post;
-
       localStorage.setItem("localPosts", JSON.stringify(localPosts));
     }
   };
@@ -510,7 +502,6 @@ if (btnSave) {
 let allPosts = document.querySelector(".allPosts__content");
 
 if (allPosts) {
-  console.log(localData);
 
   let createOnePost = function (data, month, post) {
     let onePost = document.createElement("div");
@@ -525,7 +516,7 @@ if (allPosts) {
     `;
     allPosts.prepend(onePost);
   };
-console.log(localPosts);
+
   for (let i = 0; i < localPosts.length; i++) {
     createOnePost(
       localPosts[i].number,
@@ -535,8 +526,6 @@ console.log(localPosts);
   }
 
   let shortPost = document.querySelectorAll(".allPosts__item");
- 
-  console.log(shortPost, postData);
 
   for (let j = 0; j < shortPost.length; j++) {
     shortPost[j].onclick = function () { 
@@ -546,7 +535,6 @@ console.log(localPosts);
       localData.number = Number(postData[j].textContent.trim());
       localData.month = postMonth[j].textContent.trim();
       localStorage.setItem("dayLink", JSON.stringify(localData));
-      console.log(localData);
     };
   }
 }
