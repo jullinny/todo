@@ -110,7 +110,7 @@ if (year) {
     }
   }
 
-// определение количества дней в месяце
+  // определение количества дней в месяце
 
   let today = new Date();
   let todayDate = today.getDate();
@@ -157,7 +157,7 @@ if (year) {
     }
   });
 
-  // автоматическая отрисовка календаря 
+  // автоматическая отрисовка календаря
 
   months.forEach((item) => {
     if (item.id === todayMonthNumber) {
@@ -276,6 +276,7 @@ if (year) {
 
 allTasksArray = JSON.parse(localStorage.getItem("array"));
 
+console.log(allTasksArray);
 if (input) {
   let tasksContentHTML = document.querySelector(".tasks__content");
   let btnAdd = document.querySelector(".tasks__btn-add");
@@ -290,13 +291,12 @@ if (input) {
   let task = "";
   let noTask = document.createElement("div");
 
-  let isTasks = function () {
-    if (allTasksArray && allTasksArray.length === 0) {
+  let isTasks = function (noTaskToday) {
+    if ((allTasksArray && allTasksArray.length === 0) || noTaskToday === false) {
       noTask.classList.add("tasks__no-task");
       noTask.innerHTML = `Задач на сегодня нет`;
       tasksContentHTML.appendChild(noTask);
       noTask.classList.remove("display-none");
-      
     } else {
       noTask.classList.add("display-none");
     }
@@ -311,6 +311,12 @@ if (input) {
         task === allTasksArray[j].text &&
         allTasksArray[j].data === dataPage.textContent
       ) {
+        console.log(
+          task,
+          allTasksArray[j].text,
+          allTasksArray[j].data,
+          dataPage.textContent
+        );
         warning = true;
       }
     }
@@ -318,14 +324,17 @@ if (input) {
     return warning;
   };
 
+  console.log(allTasksArray);
+
   btnAdd.onclick = function () {
+    console.log(allTasksArray && taskCheck(task) === false && task !== "");
     task = input.value;
     input.value = "";
-    if (allTasksArray) {
-      if (taskCheck(task) === false && task !== "") {
-        addTask(task);
-      }
-    } else addTask(task);
+    if (allTasksArray && taskCheck(task) === false && task !== "") {
+      addTask(task);
+    } else if (!allTasksArray) {
+      addTask(task);
+    }
   };
 
   input.addEventListener("keypress", function (e) {
@@ -355,7 +364,6 @@ if (input) {
     let newTask = document.createElement("div");
     newTask.classList.add("tasks__item");
     newTask.innerHTML = createNewTask(task);
-
     tasksContentHTML.prepend(newTask);
 
     let taskObj = {
@@ -372,8 +380,10 @@ if (input) {
       if (taskCheck(task) === false) {
         someArray.push(taskObj);
         localStorage.setItem("array", JSON.stringify(someArray));
+        console.log(JSON.parse(localStorage.getItem("array")));
         allTasksArray.push(taskObj);
         localStorage.setItem("array", JSON.stringify(allTasksArray));
+        console.log(JSON.parse(localStorage.getItem("array")));
       }
     }
 
@@ -420,18 +430,24 @@ if (input) {
 
   window.onload();
 
-  if (allTasksArray) {
-    allTasksArray.forEach((item) => {
-      if (item.data === window.onload()) {
-        task = item.text;
-        done = item.done;
-        addTask(task, done);
-      } else {
-        allTasksArray = [];
-        isTasks(allTasksArray);
+  const printTasks = function () {
+    let isTaskToday;
+    if (allTasksArray) {
+      allTasksArray.forEach((item) => {
+        if (item.data === window.onload()) {
+          isTaskToday = true;
+          task = item.text;
+          done = item.done;
+          addTask(task, done);
+        } 
+      });
+      if (isTaskToday !== true) {
+        isTasks(false);
       }
-    });
-  }
+    }
+  };
+
+  printTasks();
 
   btnDataPrev.onclick = function () {
     localData.number = localData.number - 1;
@@ -502,7 +518,6 @@ if (btnSave) {
 let allPosts = document.querySelector(".allPosts__content");
 
 if (allPosts) {
-
   let createOnePost = function (data, month, post) {
     let onePost = document.createElement("div");
     onePost.innerHTML = `
@@ -528,7 +543,7 @@ if (allPosts) {
   let shortPost = document.querySelectorAll(".allPosts__item");
 
   for (let j = 0; j < shortPost.length; j++) {
-    shortPost[j].onclick = function () { 
+    shortPost[j].onclick = function () {
       let postData = document.querySelectorAll(".allPosts__item-data");
       let postMonth = document.querySelectorAll(".allPosts__item-month");
 
@@ -538,4 +553,3 @@ if (allPosts) {
     };
   }
 }
-
