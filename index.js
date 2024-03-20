@@ -468,7 +468,6 @@ let postData = document.querySelector(".posts__data");
 
 let localPosts = JSON.parse(localStorage.getItem("localPosts"));
 
-console.log(localPosts)
 
 if (btnSave) {
   postData.textContent = localData.number + " " + localData.month;
@@ -485,18 +484,15 @@ if (btnSave) {
     }
     return choosenPost;
   };
-  console.log(isPostRepeat())
 
   if (localPosts && localPosts.length > 0) {
     if (isPostRepeat() === undefined) {
       postTextHTML.textContent = "";
     } else postTextHTML.textContent = isPostRepeat().post;
-    
   }
 
   let postsArray = [];
   let changePost = function () {
-    console.log(isPostRepeat() === undefined);
     if (isPostRepeat() === undefined) {
       localPosts.push(localData);
       localStorage.setItem("localPosts", JSON.stringify(localPosts));
@@ -517,18 +513,6 @@ if (btnSave) {
       } else changePost();
     } 
   };
-
-  console.log(localData.post, postTextHTML.value, localData)
-
-  for (let i = 0; i < localPosts.length; i++) {
-    
-    for (let j = 0; j < localPosts.length; j++) {
-      if (localPosts[i] === localPosts[j]) {
-        localPosts.splice(j, 1);
-        localStorage.setItem("localPosts", JSON.stringify(localPosts));
-      }
-    }
-  }
 }
 
 let allPosts = document.querySelector(".allPosts__content");
