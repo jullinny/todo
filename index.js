@@ -522,11 +522,12 @@ if (btnSave) {
 
   for (let i = 0; i < localPosts.length; i++) {
     
-    if (localPosts[i].post === '') {
-      localPosts.splice(i, 1)
-      localStorage.setItem("localPosts", JSON.stringify(localPosts));
+    for (let j = 0; j < localPosts.length; j++) {
+      if (localPosts[i] === localPosts[j]) {
+        localPosts.splice(j, 1);
+        localStorage.setItem("localPosts", JSON.stringify(localPosts));
+      }
     }
-  console.log(localPosts)
   }
 }
 
