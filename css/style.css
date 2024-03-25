@@ -50,6 +50,31 @@ body {
   background-size: cover;
 }
 
+.common-tasks {
+  position: absolute;
+  top: 5vh;
+  left: 5vw;
+}
+.common-tasks svg {
+  fill: rgb(104, 60, 141);
+  width: 30px;
+  height: 30px;
+}
+.common-tasks__body {
+  background-image: url(../img/common-tasks-bg.jpg);
+}
+
+.all-posts {
+  position: absolute;
+  top: 5vh;
+  left: 20vw;
+}
+.all-posts svg {
+  width: 30px;
+  height: 30px;
+  fill: rgb(104, 60, 141);
+}
+
 .calendar {
   padding-top: 12vh;
 }
@@ -508,5 +533,8 @@ body {
   .tasks__no-task {
     max-width: 65vw;
     font-size: 20px;
+  }
+  .common-tasks__body {
+    background-image: url(../img/common-tasks-bg.jpg);
   }
 }/*# sourceMappingURL=style.css.map */

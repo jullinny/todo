@@ -8,6 +8,7 @@ let buttonNext = document.querySelector(".calendar__month-next");
 let dataPage = document.querySelector(".tasks__data-text");
 let input = document.querySelector(".tasks__input");
 let localData = JSON.parse(localStorage.getItem("dayLink"));
+let commonTasks = document.querySelector(".common-tasks__body");
 let postsArray = [];
 let postText;
 const arrayofDaysDesc = [];
@@ -274,6 +275,7 @@ if (year) {
 }
 
 allTasksArray = JSON.parse(localStorage.getItem("array"));
+allCommonTasksArray = JSON.parse(localStorage.getItem("commonTasksArray"));
 
 if (input) {
   let tasksContentHTML = document.querySelector(".tasks__content");
@@ -305,13 +307,20 @@ if (input) {
 
   isTasks();
 
-  let taskCheck = function (task) {
+  let taskCheck = function (task, array) {
     let warning = false;
-    for (let j = 0; j < allTasksArray.length; j++) {
-      if (
-        task === allTasksArray[j].text &&
-        allTasksArray[j].data === dataPage.textContent
-      ) {
+    for (let j = 0; j < array.length; j++) {
+      if (task === array[j].text && array[j].data === dataPage.textContent) {
+        warning = true;
+      }
+    }
+    return warning;
+  };
+
+  let commonTaskCheck = function (task, array) {
+    let warning = false;
+    for (let j = 0; j < array.length; j++) {
+      if (task === array[j].text) {
         warning = true;
       }
     }
@@ -321,7 +330,13 @@ if (input) {
   btnAdd.onclick = function () {
     task = input.value;
     input.value = "";
-    if (allTasksArray && taskCheck(task) === false && task !== "") {
+    if (commonTasks) {
+      addTask(task);
+    } else if (
+      allTasksArray &&
+      taskCheck(task, allTasksArray) === false &&
+      task !== ""
+    ) {
       addTask(task);
     } else if (!allTasksArray) {
       addTask(task);
@@ -364,15 +379,32 @@ if (input) {
     };
 
     let someArray = [];
-    if (!allTasksArray) {
+    if (!allTasksArray && btnDataPrev) {
       someArray.push(taskObj);
       localStorage.setItem("array", JSON.stringify(someArray));
-    } else {
-      if (taskCheck(task) === false) {
+    } else if (allTasksArray && btnDataPrev) {
+      if (taskCheck(task, allTasksArray) === false) {
         someArray.push(taskObj);
         localStorage.setItem("array", JSON.stringify(someArray));
         allTasksArray.push(taskObj);
         localStorage.setItem("array", JSON.stringify(allTasksArray));
+      }
+    }
+
+    if (!allCommonTasksArray && commonTasks) {
+      console.log(1);
+      someArray.push(taskObj);
+      localStorage.setItem("commonTasksArray", JSON.stringify(someArray));
+    } else {
+      if (commonTaskCheck(task, allCommonTasksArray) === false) {
+        console.log(1);
+        someArray.push(taskObj);
+        localStorage.setItem("commonTasksArray", JSON.stringify(someArray));
+        allCommonTasksArray.push(taskObj);
+        localStorage.setItem(
+          "commonTasksArray",
+          JSON.stringify(allCommonTasksArray)
+        );
       }
     }
 
@@ -384,22 +416,40 @@ if (input) {
 
     btnDone.onclick = function () {
       taskText.classList.toggle("line-through");
-      let index = allTasksArray.findIndex((el) => el.text === task);
-      if (taskText.classList.contains("line-through")) {
-        allTasksArray[index].done = true;
-      } else {
-        allTasksArray[index].done = false;
+      if (btnDataPrev) {
+        taskDone(allTasksArray, "array" );
+      } else if (commonTasks) {
+        taskDone(allCommonTasksArray, "commonTasksArray");
       }
-      localStorage.setItem("array", JSON.stringify(allTasksArray));
     };
 
+    let taskDone = function(array, localArrayName) {
+      let index = array.findIndex((el) => el.text === task);
+      if (taskText.classList.contains("line-through")) {
+        array[index].done = true;
+      } else {
+        array[index].done = false;
+      }
+      localStorage.setItem(localArrayName, JSON.stringify(array));
+    };
+
+    console.log(allCommonTasksArray)
+
     btnDelete.onclick = function () {
-      let index = allTasksArray.findIndex((el) => el.text === task);
-      allTasksArray.splice(index, 1);
-      localStorage.setItem("array", JSON.stringify(allTasksArray));
+      if (btnDataPrev) {
+        taskDelete(allTasksArray, "array" );
+      } else if (commonTasks) {
+        taskDelete(allCommonTasksArray, "commonTasksArray");
+      }
+    };
+
+    let taskDelete = function (array, localArrayName) {
+      let index = array.findIndex((el) => el.text === task);
+      array.splice(index, 1);
+      localStorage.setItem(localArrayName, JSON.stringify(array));
       newTask.remove();
       isTasks();
-    };
+    }
 
     isDone(taskObj, taskText);
   };
@@ -412,18 +462,19 @@ if (input) {
     }
   };
 
-  window.onload = function () {
-    dataPage.textContent = localData.number + " " + localData.month;
-    return dataPage.textContent;
-  };
+  if (dataPage) {
+    window.onload = function () {
+      dataPage.textContent = localData.number + " " + localData.month;
+      return dataPage.textContent;
+    };
+    window.onload();
+  }
 
-  window.onload();
-
-  const printTasks = function () {
+  const printTasks = function (array) {
     let isTaskToday;
-    if (allTasksArray) {
-      allTasksArray.forEach((item) => {
-        if (item.data === window.onload()) {
+    if ((array && dataPage) || commonTasks) {
+      array.forEach((item) => {
+        if (commonTasks || item.data === window.onload()) {
           isTaskToday = true;
           task = item.text;
           done = item.done;
@@ -436,51 +487,53 @@ if (input) {
     }
   };
 
-  printTasks();
+  if (commonTasks) {
+    printTasks(allCommonTasksArray);
+  } else {
+    printTasks(allTasksArray);
+  }
 
   let monthsLocal = JSON.parse(localStorage.getItem("months"));
 
-  btnDataPrev.onclick = function () {
-    for (let i = 0; i < monthsLocal.length; i++) {
-      if (monthsLocal[i].monthToTask === localData.month) {
-        localData.number = localData.number - 1;
-        if (
-          localData.number < 1
-        ) {
-          localData.month = monthsLocal[i - 1].monthToTask;
-          localData.number = monthsLocal[i - 1].days[monthsLocal[i - 1].days.length - 1];
-          localStorage.setItem("dayLink", JSON.stringify(localData));
-          location.reload();
-        } else {
-          localStorage.setItem("dayLink", JSON.stringify(localData));
-          location.reload();
+  if (btnDataPrev || btnDataNext) {
+    btnDataPrev.onclick = function () {
+      for (let i = 0; i < monthsLocal.length; i++) {
+        if (monthsLocal[i].monthToTask === localData.month) {
+          localData.number = localData.number - 1;
+          if (localData.number < 1) {
+            localData.month = monthsLocal[i - 1].monthToTask;
+            localData.number =
+              monthsLocal[i - 1].days[monthsLocal[i - 1].days.length - 1];
+            localStorage.setItem("dayLink", JSON.stringify(localData));
+            location.reload();
+          } else {
+            localStorage.setItem("dayLink", JSON.stringify(localData));
+            location.reload();
+          }
         }
       }
-    }
-  };
+    };
 
-  console.log(monthsLocal)
-
-  btnDataNext.onclick = function () {
-    for (let i = 0; i < monthsLocal.length; i++) {
-      if (monthsLocal[i].monthToTask === localData.month) {
-        localData.number = localData.number + 1;
-        if (
-          localData.number > monthsLocal[i].days[monthsLocal[i].days.length - 1]
-        ) {
-          localData.month = monthsLocal[i + 1].monthToTask;
-          localData.number = 0;
-          localStorage.setItem("dayLink", JSON.stringify(localData));
-          location.reload();
-        } else {
-          localStorage.setItem("dayLink", JSON.stringify(localData));
-          location.reload();
+    btnDataNext.onclick = function () {
+      for (let i = 0; i < monthsLocal.length; i++) {
+        if (monthsLocal[i].monthToTask === localData.month) {
+          localData.number = localData.number + 1;
+          if (
+            localData.number >
+            monthsLocal[i].days[monthsLocal[i].days.length - 1]
+          ) {
+            localData.month = monthsLocal[i + 1].monthToTask;
+            localData.number = 0;
+            localStorage.setItem("dayLink", JSON.stringify(localData));
+            location.reload();
+          } else {
+            localStorage.setItem("dayLink", JSON.stringify(localData));
+            location.reload();
+          }
         }
       }
-    }
-  };
-
-  console.log(monthsLocal[0].monthToTask, localData.month, monthsLocal.length);
+    };
+  }
 }
 
 let btnSave = document.querySelector(".posts__button-save");
