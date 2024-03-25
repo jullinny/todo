@@ -53,7 +53,7 @@ body {
 .common-tasks {
   position: absolute;
   top: 5vh;
-  left: 5vw;
+  left: 3vw;
 }
 .common-tasks svg {
   fill: rgb(104, 60, 141);
