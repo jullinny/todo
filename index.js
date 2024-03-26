@@ -295,8 +295,6 @@ if (input) {
   };
 
   if (scheduleHTML) {
-    console.log(allScheduleArray);
-
     scheduleSaveBtn.onclick = function () {
       let firstArr = [];
       if (!allScheduleArray) {
@@ -358,12 +356,14 @@ if (input) {
       }
     };
 
-    for (let i = 0; i < allScheduleArray.length; i++) {
-      if (
-        localData.number + " " + localData.month ===
-        allScheduleArray[i].data
-      ) {
-        scheduleHTML.textContent = allScheduleArray[i].schedule;
+    if (allScheduleArray) {
+      for (let i = 0; i < allScheduleArray.length; i++) {
+        if (
+          localData.number + " " + localData.month ===
+          allScheduleArray[i].data
+        ) {
+          scheduleHTML.textContent = allScheduleArray[i].schedule;
+        }
       }
     }
   }
@@ -661,7 +661,7 @@ if (btnSave) {
 
   btnSave.onclick = function () {
     localData.post = postTextHTML.value;
-    console.log(isPostRepeat())
+    console.log(isPostRepeat());
     if (postsArray.length === 0 && postTextHTML.value !== "") {
       postsArray.push(localData);
       localStorage.setItem("localPosts", JSON.stringify(postsArray));
