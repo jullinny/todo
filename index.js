@@ -276,6 +276,7 @@ if (year) {
 
 allTasksArray = JSON.parse(localStorage.getItem("array"));
 allCommonTasksArray = JSON.parse(localStorage.getItem("commonTasksArray"));
+allScheduleArray = JSON.parse(localStorage.getItem("scheduleLocalArr"));
 
 if (input) {
   let tasksContentHTML = document.querySelector(".tasks__content");
@@ -283,6 +284,89 @@ if (input) {
   let form = document.querySelector(".tasks__form");
   let btnDataPrev = document.querySelector(".tasks__data-prev");
   let btnDataNext = document.querySelector(".tasks__data-next");
+  let scheduleHTML = document.querySelector(".tasks__schedule-text");
+  let scheduleSaveBtn = document.querySelector(".tasks__schedule-btn");
+
+  let createScheduleObj = function (text) {
+    return {
+      data: localData.number + " " + localData.month,
+      schedule: text,
+    };
+  };
+
+  if (scheduleHTML) {
+    console.log(allScheduleArray);
+
+    scheduleSaveBtn.onclick = function () {
+      let firstArr = [];
+      if (!allScheduleArray) {
+        firstArr.push(createScheduleObj(scheduleHTML.value));
+        localStorage.setItem("scheduleLocalArr", JSON.stringify(firstArr));
+      } else {
+        if (
+          scheduleRepeatCheck(createScheduleObj(scheduleHTML.value)) === false
+        ) {
+          if (
+            scheduleRepeatCheck(createScheduleObj(scheduleHTML.value)) ===
+            "repeat"
+          ) {
+            scheduleChangeText(createScheduleObj(scheduleHTML.value));
+          } else {
+            firstArr.push(createScheduleObj(scheduleHTML.value));
+            localStorage.setItem("scheduleLocalArr", JSON.stringify(firstArr));
+            allScheduleArray.push(createScheduleObj(scheduleHTML.value));
+            localStorage.setItem(
+              "scheduleLocalArr",
+              JSON.stringify(allScheduleArray)
+            );
+          }
+        }
+      }
+    };
+
+    let scheduleRepeatCheck = function (text) {
+      for (let i = 0; i < allScheduleArray.length; i++) {
+        if (
+          text.schedule === allScheduleArray[i].schedule &&
+          text.data === allScheduleArray[i].data
+        ) {
+          return true;
+        } else if (
+          text.schedule !== allScheduleArray[i].schedule &&
+          text.data === allScheduleArray[i].data
+        ) {
+          return "repeat";
+        }
+      }
+      return false;
+    };
+
+    let scheduleChangeText = function (text) {
+      for (let i = 0; i < allScheduleArray.length; i++) {
+        if (
+          text.schedule === allScheduleArray[i].schedule &&
+          text.data === allScheduleArray[i].data
+        ) {
+          allScheduleArray[i].schedule = text.schedule;
+          allScheduleArray.push(createScheduleObj(scheduleHTML.value));
+          localStorage.setItem(
+            "scheduleLocalArr",
+            JSON.stringify(allScheduleArray)
+          );
+          return;
+        }
+      }
+    };
+
+    for (let i = 0; i < allScheduleArray.length; i++) {
+      if (
+        localData.number + " " + localData.month ===
+        allScheduleArray[i].data
+      ) {
+        scheduleHTML.textContent = allScheduleArray[i].schedule;
+      }
+    }
+  }
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -366,41 +450,44 @@ if (input) {
   `;
   };
 
+  console.log(allTasksArray);
+
+  let createTaskObj = function (task, done) {
+    return {
+      data: localData.number + " " + localData.month,
+      text: task,
+      done: done,
+    };
+  };
+
   let addTask = function (task, done = false) {
     let newTask = document.createElement("div");
     newTask.classList.add("tasks__item");
     newTask.innerHTML = createNewTask(task);
     tasksContentHTML.prepend(newTask);
 
-    let taskObj = {
-      data: localData.number + " " + localData.month,
-      text: task,
-      done: done,
-    };
-
     let someArray = [];
     if (!allTasksArray && btnDataPrev) {
-      someArray.push(taskObj);
+      someArray.push(createTaskObj(task, done));
       localStorage.setItem("array", JSON.stringify(someArray));
     } else if (allTasksArray && btnDataPrev) {
       if (taskCheck(task, allTasksArray) === false) {
-        someArray.push(taskObj);
+        someArray.push(createTaskObj(task, done));
         localStorage.setItem("array", JSON.stringify(someArray));
-        allTasksArray.push(taskObj);
+        allTasksArray.push(createTaskObj(task, done));
         localStorage.setItem("array", JSON.stringify(allTasksArray));
       }
     }
 
     if (!allCommonTasksArray && commonTasks) {
-      console.log(1);
-      someArray.push(taskObj);
+      someArray.push(createTaskObj(task, done));
       localStorage.setItem("commonTasksArray", JSON.stringify(someArray));
-    } else {
+    } else if (allCommonTasksArray && commonTasks) {
       if (commonTaskCheck(task, allCommonTasksArray) === false) {
         console.log(1);
-        someArray.push(taskObj);
+        someArray.push(createTaskObj(task, done));
         localStorage.setItem("commonTasksArray", JSON.stringify(someArray));
-        allCommonTasksArray.push(taskObj);
+        allCommonTasksArray.push(createTaskObj(task, done));
         localStorage.setItem(
           "commonTasksArray",
           JSON.stringify(allCommonTasksArray)
@@ -417,13 +504,13 @@ if (input) {
     btnDone.onclick = function () {
       taskText.classList.toggle("line-through");
       if (btnDataPrev) {
-        taskDone(allTasksArray, "array" );
+        taskDone(allTasksArray, "array");
       } else if (commonTasks) {
         taskDone(allCommonTasksArray, "commonTasksArray");
       }
     };
 
-    let taskDone = function(array, localArrayName) {
+    let taskDone = function (array, localArrayName) {
       let index = array.findIndex((el) => el.text === task);
       if (taskText.classList.contains("line-through")) {
         array[index].done = true;
@@ -433,11 +520,9 @@ if (input) {
       localStorage.setItem(localArrayName, JSON.stringify(array));
     };
 
-    console.log(allCommonTasksArray)
-
     btnDelete.onclick = function () {
       if (btnDataPrev) {
-        taskDelete(allTasksArray, "array" );
+        taskDelete(allTasksArray, "array");
       } else if (commonTasks) {
         taskDelete(allCommonTasksArray, "commonTasksArray");
       }
@@ -449,9 +534,9 @@ if (input) {
       localStorage.setItem(localArrayName, JSON.stringify(array));
       newTask.remove();
       isTasks();
-    }
+    };
 
-    isDone(taskObj, taskText);
+    isDone(createTaskObj(), taskText);
   };
 
   let isDone = function (taskObj, taskText) {
@@ -487,9 +572,9 @@ if (input) {
     }
   };
 
-  if (commonTasks) {
+  if (commonTasks && allCommonTasksArray) {
     printTasks(allCommonTasksArray);
-  } else {
+  } else if (allTasksArray) {
     printTasks(allTasksArray);
   }
 
@@ -576,6 +661,7 @@ if (btnSave) {
 
   btnSave.onclick = function () {
     localData.post = postTextHTML.value;
+    console.log(isPostRepeat())
     if (postsArray.length === 0 && postTextHTML.value !== "") {
       postsArray.push(localData);
       localStorage.setItem("localPosts", JSON.stringify(postsArray));
@@ -604,12 +690,14 @@ if (allPosts) {
     allPosts.prepend(onePost);
   };
 
-  for (let i = 0; i < localPosts.length; i++) {
-    createOnePost(
-      localPosts[i].number,
-      localPosts[i].month,
-      localPosts[i].post
-    );
+  if (localPosts) {
+    for (let i = 0; i < localPosts.length; i++) {
+      createOnePost(
+        localPosts[i].number,
+        localPosts[i].month,
+        localPosts[i].post
+      );
+    }
   }
 
   let shortPost = document.querySelectorAll(".allPosts__item");

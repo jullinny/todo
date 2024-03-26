@@ -245,7 +245,7 @@ body {
 .tasks__content {
   margin-top: 40px;
   overflow-y: auto;
-  height: 60vh;
+  height: 40vh;
   scrollbar-width: thin;
   scrollbar-color: #fff rgba(224, 190, 146, 0.329);
 }
@@ -290,6 +290,25 @@ body {
   font-weight: 600;
   font-style: italic;
   color: rgb(107, 72, 27);
+}
+.tasks__schedule-text {
+  width: 72vw;
+  height: 20vh;
+  border-radius: 30px;
+  resize: none;
+  margin-right: 10px;
+  background-color: rgba(255, 255, 255, 0.219);
+  outline: 0;
+  padding: 20px;
+  font-size: calc(18px + 6 * (100vw - 320px) / 880);
+  font-weight: 500;
+  line-height: 1.25;
+  font-style: italic;
+}
+.tasks__schedule-btn {
+  border: 1px solid rgba(224, 190, 146, 0.726);
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.219);
 }
 
 .posts {
