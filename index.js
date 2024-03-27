@@ -511,12 +511,14 @@ if (input) {
     };
 
     let taskDone = function (array, localArrayName) {
-      let index = array.findIndex((el) => el.text === task);
+      let index = array.findIndex((el) => el.text === task && el.data === localData.number + " " + localData.month);
       if (taskText.classList.contains("line-through")) {
+        console.log(2)
         array[index].done = true;
       } else {
         array[index].done = false;
       }
+      console.log( array[index])
       localStorage.setItem(localArrayName, JSON.stringify(array));
       console.log(allTasksArray)
     };
@@ -530,7 +532,7 @@ if (input) {
     };
 
     let taskDelete = function (array, localArrayName) {
-      let index = array.findIndex((el) => el.text === task);
+      let index = array.findIndex((el) => el.text === task && el.data === localData.number + " " + localData.month);
       array.splice(index, 1);
       localStorage.setItem(localArrayName, JSON.stringify(array));
       newTask.remove();
