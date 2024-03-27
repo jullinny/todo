@@ -518,6 +518,7 @@ if (input) {
         array[index].done = false;
       }
       localStorage.setItem(localArrayName, JSON.stringify(array));
+      console.log(allTasksArray)
     };
 
     btnDelete.onclick = function () {
@@ -536,9 +537,10 @@ if (input) {
       isTasks();
     };
 
-    isDone(createTaskObj(), taskText);
+    isDone(createTaskObj(task, done), taskText);
   };
 
+  
   let isDone = function (taskObj, taskText) {
     if (taskObj.done === true) {
       taskText.classList.add("line-through");
