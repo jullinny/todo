@@ -106,7 +106,7 @@ const saveLocalStorage = function (name, value) {
 
 const getLocalStorage = function (name) {
   return JSON.parse(localStorage.getItem(name));
-}
+};
 
 // изменение краткой/полной формы названия дней недели
 
@@ -187,7 +187,8 @@ if (year) {
 
   let isTodayDay = function (day, newDay) {
     if ((day === todayDate) & (correctMonth === todayMonth)) {
-      newDay.style.borderColor = "brown";
+      newDay.style.borderColor = "rgb(71 37 5)";
+      newDay.style.borderWidth = "3px";
     }
   };
 
@@ -285,7 +286,6 @@ allCommonTasksArray = getLocalStorage("commonTasksArray");
 allScheduleArray = getLocalStorage("scheduleLocalArr");
 let localData = getLocalStorage("dayLink");
 
-
 if (input) {
   const tasksContentHTML = document.querySelector(".tasks__content");
   const btnAdd = document.querySelector(".tasks__btn-add");
@@ -310,28 +310,27 @@ if (input) {
         saveLocalStorage("scheduleLocalArr", firstArr);
       } else {
         if (
-          scheduleRepeatCheck(createScheduleObj(scheduleHTML.value)) === false
+          scheduleRepeatCheck(createScheduleObj(scheduleHTML.value)) === true
         ) {
-          if (
-            scheduleRepeatCheck(createScheduleObj(scheduleHTML.value)) ===
-            "repeat"
-          ) {
-            scheduleChangeText(createScheduleObj(scheduleHTML.value));
-          } else {
-            firstArr.push(createScheduleObj(scheduleHTML.value));
-            saveLocalStorage("scheduleLocalArr", firstArr);
-            allScheduleArray.push(createScheduleObj(scheduleHTML.value));
-            saveLocalStorage("scheduleLocalArr", allScheduleArray);
-          }
+          firstArr.push(createScheduleObj(scheduleHTML.value));
+          saveLocalStorage("scheduleLocalArr", firstArr);
+          allScheduleArray.push(createScheduleObj(scheduleHTML.value));
+          saveLocalStorage("scheduleLocalArr", allScheduleArray);
         }
+        if (
+          scheduleRepeatCheck(createScheduleObj(scheduleHTML.value)) ===
+          "repeat"
+        ) {
+          scheduleChangeText(createScheduleObj(scheduleHTML.value));
+        } 
       }
     };
 
     let scheduleRepeatCheck = function (text) {
       for (let i = 0; i < allScheduleArray.length; i++) {
         if (
-          text.schedule === allScheduleArray[i].schedule &&
-          text.data === allScheduleArray[i].data
+          text.schedule !== allScheduleArray[i].schedule &&
+          text.data !== allScheduleArray[i].data
         ) {
           return true;
         } else if (
@@ -347,7 +346,6 @@ if (input) {
     let scheduleChangeText = function (text) {
       for (let i = 0; i < allScheduleArray.length; i++) {
         if (
-          text.schedule === allScheduleArray[i].schedule &&
           text.data === allScheduleArray[i].data
         ) {
           allScheduleArray[i].schedule = text.schedule;

@@ -58,7 +58,7 @@ body {
 .all-posts svg {
   width: 45px;
   height: 45px;
-  fill: rgb(104, 60, 141);
+  fill: rgb(99, 85, 99);
 }
 
 .calendar {
@@ -73,12 +73,12 @@ body {
   font-size: calc(14px + 16 * (100vw - 320px) / 880);
   font-weight: 600;
   padding: 1vw 1vw;
-  color: rgb(67, 133, 83);
+  color: rgba(70, 56, 37, 0.719);
 }
 .calendar__inner {
   width: 80vw;
   border-radius: 30px;
-  border: 2px solid #b481c2;
+  border: 2px solid rgba(70, 56, 37, 0.342);
   backdrop-filter: blur(20px);
   height: 70vh;
   margin: 0 auto;
@@ -94,7 +94,7 @@ body {
 .calendar .calendar__month-next {
   background: transparent;
   border: none;
-  fill: #a520ca;
+  fill: rgb(99, 85, 99);
   height: calc(14px + 8 * (100vw - 320px) / 880);
   width: calc(14px + 8 * (100vw - 320px) / 880);
   cursor: pointer;
@@ -102,7 +102,7 @@ body {
 .calendar__days-name {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  color: #a520ca;
+  color: rgba(70, 56, 37, 0.719);
   font-size: calc(14px + 8 * (100vw - 320px) / 880);
   font-weight: 600;
   padding: 1vw;
@@ -116,16 +116,16 @@ body {
   font-size: calc(12px + 10 * (100vw - 320px) / 880);
 }
 .calendar__day {
-  border: 1px solid rgba(101, 72, 109, 0.3843137255);
+  border: 1px solid rgba(70, 56, 37, 0.842);
   border-radius: 20px;
   padding: 1vw 0.8vw;
-  color: antiquewhite;
+  color: rgb(26, 12, 1);
   cursor: pointer;
 }
 .calendar__day:hover {
-  border: 3px solid #a520ca;
+  border: 3px solid rgb(71, 37, 5);
   padding: 0.7vw;
-  color: #a520ca;
+  color: rgb(71, 37, 5);
   font-weight: 700;
 }
 
@@ -292,6 +292,7 @@ body {
   font-style: italic;
 }
 .tasks__schedule-btn {
+  cursor: pointer;
   border: 1px solid rgba(224, 190, 146, 0.726);
   border-radius: 30px;
   background-color: rgba(255, 255, 255, 0.219);
@@ -314,7 +315,7 @@ body {
   left: 3vw;
 }
 .common-tasks__link svg {
-  fill: rgb(104, 60, 141);
+  fill: rgb(99, 85, 99);
   width: 45px;
   height: 45px;
 }
