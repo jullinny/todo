@@ -50,20 +50,6 @@ body {
   background-size: cover;
 }
 
-.common-tasks {
-  position: absolute;
-  top: 5vh;
-  left: 3vw;
-}
-.common-tasks svg {
-  fill: rgb(104, 60, 141);
-  width: 45px;
-  height: 45px;
-}
-.common-tasks__body {
-  background-image: url(../img/common-tasks-bg.jpg);
-}
-
 .all-posts {
   position: absolute;
   top: 5vh;
@@ -144,10 +130,10 @@ body {
 }
 
 .tasks {
-  height: 100svh;
-  padding-top: 10vh;
+  padding-top: 15vh;
 }
 .tasks__body {
+  height: 100svh;
   background-image: url(../img/bg2.jpg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -166,7 +152,7 @@ body {
   align-items: center;
   gap: 20px;
   position: absolute;
-  top: 3vh;
+  top: 6vh;
   left: 50%;
   transform: translateX(-50%);
   font-size: calc(16px + 10 * (100vw - 320px) / 880);
@@ -316,6 +302,27 @@ body {
   padding-bottom: 2vh;
   color: rgba(26, 12, 1, 0.5333333333);
   font-style: italic;
+  padding-top: 3vh;
+}
+
+.common-tasks {
+  padding-top: 2vh;
+}
+.common-tasks__link {
+  position: absolute;
+  top: 5vh;
+  left: 3vw;
+}
+.common-tasks__link svg {
+  fill: rgb(104, 60, 141);
+  width: 45px;
+  height: 45px;
+}
+.common-tasks__body {
+  background-image: url(../img/common-tasks-bg.jpg);
+}
+.common-tasks__title {
+  padding-top: 6vh;
 }
 
 .posts {
@@ -411,12 +418,20 @@ body {
   color: #6b5d44;
 }
 
+.allPosts {
+  padding-top: 5vh;
+}
 .allPosts__body {
   background-image: url(../img/allPosts-bg.jpg);
 }
 .allPosts__inner {
   padding: 2vw;
   padding-right: 1vw;
+  height: 75vh;
+}
+.allPosts__title {
+  padding-top: 0;
+  padding-bottom: 4vh;
 }
 .allPosts__content {
   height: 70vh;
@@ -426,10 +441,10 @@ body {
 .allPosts__item {
   display: block;
   width: 100%;
-  padding: 1.5vw;
+  padding: 1vw;
   border-radius: 30px;
   border: 2px solid rgba(110, 93, 110, 0.719);
-  font-size: calc(18px + 8 * (100vw - 320px) / 880);
+  font-size: calc(14px + 8 * (100vw - 320px) / 880);
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
@@ -468,7 +483,7 @@ body {
     font-weight: 400;
   }
   .tasks {
-    padding-top: 11vh;
+    padding-top: 14vh;
   }
   .tasks__data-prev:hover {
     transform: translateX(0px);
@@ -507,7 +522,7 @@ body {
     transform: translateX(0px);
   }
   .tasks__link-post {
-    top: -6vh;
+    top: -9vh;
     right: 0;
   }
   .tasks__form {
@@ -569,6 +584,12 @@ body {
     width: 30px;
     height: 30px;
   }
+  .allPosts {
+    padding-top: 6vh;
+  }
+  .allPosts__title {
+    padding-top: 0;
+  }
   .allPosts__body {
     background-image: url(../img/allPosts-bg-phone.jpg);
   }
@@ -576,7 +597,10 @@ body {
     max-width: 65vw;
     font-size: 20px;
   }
-  .common-tasks svg {
+  .common-tasks {
+    padding-top: 2vh;
+  }
+  .common-tasks__link svg {
     width: 30px;
     height: 30px;
   }
@@ -589,7 +613,7 @@ body {
     height: 60vh;
   }
   .tasks {
-    padding-top: 18vh;
+    padding-top: 17vh;
   }
   .tasks__link-post {
     top: -12vh;
@@ -600,6 +624,12 @@ body {
   }
   .posts__button-save {
     margin-top: 3px;
+  }
+  .allPosts {
+    padding-top: 5vh;
+  }
+  .common-tasks {
+    padding-top: 2vh;
   }
 }
 @media (height < 600px) {
