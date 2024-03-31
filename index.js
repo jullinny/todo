@@ -1,17 +1,16 @@
-let weekDayNameFull = document.querySelectorAll(".calendar__day-name");
-let weekDayNameCut = document.querySelectorAll(".calendar__name-cut");
-let daysHTML = document.querySelector(".calendar__days");
-let year = document.querySelector(".calendar__year");
-let monthHTML = document.querySelector(".calendar__month");
-let buttonPrev = document.querySelector(".calendar__month-prev");
-let buttonNext = document.querySelector(".calendar__month-next");
-let dataPage = document.querySelector(".tasks__data-text");
-let input = document.querySelector(".tasks__input");
-let localData = JSON.parse(localStorage.getItem("dayLink"));
-let commonTasks = document.querySelector(".common-tasks__body");
+const weekDayNameFull = document.querySelectorAll(".calendar__day-name");
+const weekDayNameCut = document.querySelectorAll(".calendar__name-cut");
+const daysHTML = document.querySelector(".calendar__days");
+const year = document.querySelector(".calendar__year");
+const monthHTML = document.querySelector(".calendar__month");
+const buttonPrev = document.querySelector(".calendar__month-prev");
+const buttonNext = document.querySelector(".calendar__month-next");
+const dataPage = document.querySelector(".tasks__data-text");
+const input = document.querySelector(".tasks__input");
+const commonTasks = document.querySelector(".common-tasks__body");
 let postsArray = [];
 let postText;
-const arrayofDaysDesc = [];
+let arrayofDaysDesc = [];
 const pageHeight = document.documentElement.scrollHeight;
 
 const months = [
@@ -101,6 +100,14 @@ const months = [
   },
 ];
 
+const saveLocalStorage = function (name, value) {
+  return localStorage.setItem(name, JSON.stringify(value));
+};
+
+const getLocalStorage = function (name) {
+  return JSON.parse(localStorage.getItem(name));
+}
+
 // изменение краткой/полной формы названия дней недели
 
 if (year) {
@@ -158,7 +165,7 @@ if (year) {
       }
     }
   });
-  localStorage.setItem("months", JSON.stringify(months));
+  saveLocalStorage("months", months);
 
   // автоматическая отрисовка календаря
 
@@ -195,7 +202,7 @@ if (year) {
     for (let i = 0; i < arrayofDaysDesc.length; i++) {
       [
         (newDay.onclick = function () {
-          localStorage.setItem("dayLink", JSON.stringify(arrayofDaysDesc[i]));
+          saveLocalStorage("dayLink", arrayofDaysDesc[i]);
         }),
       ];
     }
@@ -212,9 +219,8 @@ if (year) {
 
           isTodayDay(day, newDay);
           arrayofDaysDesc.push(createDayDesc(day, item));
-          localStorage.setItem("daysDesc", JSON.stringify(arrayofDaysDesc));
+          saveLocalStorage("daysDesc", arrayofDaysDesc);
           daysHTML.appendChild(newDay);
-
           saveClickDayInfo(newDay);
         });
       }
@@ -274,20 +280,22 @@ if (year) {
   };
 }
 
-allTasksArray = JSON.parse(localStorage.getItem("array"));
-allCommonTasksArray = JSON.parse(localStorage.getItem("commonTasksArray"));
-allScheduleArray = JSON.parse(localStorage.getItem("scheduleLocalArr"));
+allTasksArray = getLocalStorage("array");
+allCommonTasksArray = getLocalStorage("commonTasksArray");
+allScheduleArray = getLocalStorage("scheduleLocalArr");
+let localData = getLocalStorage("dayLink");
+
 
 if (input) {
-  let tasksContentHTML = document.querySelector(".tasks__content");
-  let btnAdd = document.querySelector(".tasks__btn-add");
-  let form = document.querySelector(".tasks__form");
-  let btnDataPrev = document.querySelector(".tasks__data-prev");
-  let btnDataNext = document.querySelector(".tasks__data-next");
-  let scheduleHTML = document.querySelector(".tasks__schedule-text");
-  let scheduleSaveBtn = document.querySelector(".tasks__schedule-btn");
+  const tasksContentHTML = document.querySelector(".tasks__content");
+  const btnAdd = document.querySelector(".tasks__btn-add");
+  const form = document.querySelector(".tasks__form");
+  const btnDataPrev = document.querySelector(".tasks__data-prev");
+  const btnDataNext = document.querySelector(".tasks__data-next");
+  const scheduleHTML = document.querySelector(".tasks__schedule-text");
+  const scheduleSaveBtn = document.querySelector(".tasks__schedule-btn");
 
-  let createScheduleObj = function (text) {
+  const createScheduleObj = function (text) {
     return {
       data: localData.number + " " + localData.month,
       schedule: text,
@@ -299,7 +307,7 @@ if (input) {
       let firstArr = [];
       if (!allScheduleArray) {
         firstArr.push(createScheduleObj(scheduleHTML.value));
-        localStorage.setItem("scheduleLocalArr", JSON.stringify(firstArr));
+        saveLocalStorage("scheduleLocalArr", firstArr);
       } else {
         if (
           scheduleRepeatCheck(createScheduleObj(scheduleHTML.value)) === false
@@ -311,12 +319,9 @@ if (input) {
             scheduleChangeText(createScheduleObj(scheduleHTML.value));
           } else {
             firstArr.push(createScheduleObj(scheduleHTML.value));
-            localStorage.setItem("scheduleLocalArr", JSON.stringify(firstArr));
+            saveLocalStorage("scheduleLocalArr", firstArr);
             allScheduleArray.push(createScheduleObj(scheduleHTML.value));
-            localStorage.setItem(
-              "scheduleLocalArr",
-              JSON.stringify(allScheduleArray)
-            );
+            saveLocalStorage("scheduleLocalArr", allScheduleArray);
           }
         }
       }
@@ -347,10 +352,7 @@ if (input) {
         ) {
           allScheduleArray[i].schedule = text.schedule;
           allScheduleArray.push(createScheduleObj(scheduleHTML.value));
-          localStorage.setItem(
-            "scheduleLocalArr",
-            JSON.stringify(allScheduleArray)
-          );
+          saveLocalStorage("scheduleLocalArr", allScheduleArray);
           return;
         }
       }
@@ -373,9 +375,9 @@ if (input) {
   });
 
   let task = "";
-  let noTask = document.createElement("div");
+  const noTask = document.createElement("div");
 
-  let isTasks = function (noTaskToday) {
+  const isTasks = function (noTaskToday) {
     if (
       (allTasksArray && allTasksArray.length === 0) ||
       noTaskToday === false
@@ -391,7 +393,7 @@ if (input) {
 
   isTasks();
 
-  let taskCheck = function (task, array) {
+  const taskCheck = function (task, array) {
     let warning = false;
     for (let j = 0; j < array.length; j++) {
       if (task === array[j].text && array[j].data === dataPage.textContent) {
@@ -401,7 +403,7 @@ if (input) {
     return warning;
   };
 
-  let commonTaskCheck = function (task, array) {
+  const commonTaskCheck = function (task, array) {
     let warning = false;
     for (let j = 0; j < array.length; j++) {
       if (task === array[j].text) {
@@ -434,7 +436,7 @@ if (input) {
     }
   });
 
-  let createNewTask = function (task) {
+  const createNewTask = function (task) {
     return `
     <p class="tasks__item-text">${task}</p>
     <button class="tasks__btn-done" type="button">
@@ -450,9 +452,7 @@ if (input) {
   `;
   };
 
-  console.log(allTasksArray);
-
-  let createTaskObj = function (task, done) {
+  const createTaskObj = function (task, done) {
     return {
       data: localData.number + " " + localData.month,
       text: task,
@@ -469,37 +469,33 @@ if (input) {
     let someArray = [];
     if (!allTasksArray && btnDataPrev) {
       someArray.push(createTaskObj(task, done));
-      localStorage.setItem("array", JSON.stringify(someArray));
+      saveLocalStorage("array", someArray);
     } else if (allTasksArray && btnDataPrev) {
       if (taskCheck(task, allTasksArray) === false) {
         someArray.push(createTaskObj(task, done));
-        localStorage.setItem("array", JSON.stringify(someArray));
+        saveLocalStorage("array", someArray);
         allTasksArray.push(createTaskObj(task, done));
-        localStorage.setItem("array", JSON.stringify(allTasksArray));
+        saveLocalStorage("array", allTasksArray);
       }
     }
 
     if (!allCommonTasksArray && commonTasks) {
       someArray.push(createTaskObj(task, done));
-      localStorage.setItem("commonTasksArray", JSON.stringify(someArray));
+      saveLocalStorage("commonTasksArray", someArray);
     } else if (allCommonTasksArray && commonTasks) {
       if (commonTaskCheck(task, allCommonTasksArray) === false) {
-        console.log(1);
         someArray.push(createTaskObj(task, done));
-        localStorage.setItem("commonTasksArray", JSON.stringify(someArray));
+        saveLocalStorage("commonTasksArray", someArray);
         allCommonTasksArray.push(createTaskObj(task, done));
-        localStorage.setItem(
-          "commonTasksArray",
-          JSON.stringify(allCommonTasksArray)
-        );
+        saveLocalStorage("commonTasksArray", allCommonTasksArray);
       }
     }
 
     isTasks();
 
-    let btnDone = document.querySelector(".tasks__btn-done");
-    let taskText = document.querySelector(".tasks__item-text");
-    let btnDelete = document.querySelector(".tasks__btn-delete");
+    const btnDone = document.querySelector(".tasks__btn-done");
+    const taskText = document.querySelector(".tasks__item-text");
+    const btnDelete = document.querySelector(".tasks__btn-delete");
 
     btnDone.onclick = function () {
       taskText.classList.toggle("line-through");
@@ -511,16 +507,17 @@ if (input) {
     };
 
     let taskDone = function (array, localArrayName) {
-      let index = array.findIndex((el) => el.text === task && el.data === localData.number + " " + localData.month);
+      let index = array.findIndex(
+        (el) =>
+          el.text === task &&
+          el.data === localData.number + " " + localData.month
+      );
       if (taskText.classList.contains("line-through")) {
-        console.log(2)
         array[index].done = true;
       } else {
         array[index].done = false;
       }
-      console.log( array[index])
-      localStorage.setItem(localArrayName, JSON.stringify(array));
-      console.log(allTasksArray)
+      saveLocalStorage(localArrayName, array);
     };
 
     btnDelete.onclick = function () {
@@ -531,18 +528,20 @@ if (input) {
       }
     };
 
-    let taskDelete = function (array, localArrayName) {
-      let index = array.findIndex((el) => el.text === task && el.data === localData.number + " " + localData.month);
+    const taskDelete = function (array, localArrayName) {
+      let index = array.findIndex(
+        (el) =>
+          el.text === task &&
+          el.data === localData.number + " " + localData.month
+      );
       array.splice(index, 1);
-      localStorage.setItem(localArrayName, JSON.stringify(array));
+      saveLocalStorage(localArrayName, array);
       newTask.remove();
       isTasks();
     };
-
     isDone(createTaskObj(task, done), taskText);
   };
 
-  
   let isDone = function (taskObj, taskText) {
     if (taskObj.done === true) {
       taskText.classList.add("line-through");
@@ -593,10 +592,10 @@ if (input) {
             localData.month = monthsLocal[i - 1].monthToTask;
             localData.number =
               monthsLocal[i - 1].days[monthsLocal[i - 1].days.length - 1];
-            localStorage.setItem("dayLink", JSON.stringify(localData));
+            saveLocalStorage("dayLink", localData);
             location.reload();
           } else {
-            localStorage.setItem("dayLink", JSON.stringify(localData));
+            saveLocalStorage("dayLink", localData);
             location.reload();
           }
         }
@@ -613,10 +612,10 @@ if (input) {
           ) {
             localData.month = monthsLocal[i + 1].monthToTask;
             localData.number = 0;
-            localStorage.setItem("dayLink", JSON.stringify(localData));
+            saveLocalStorage("dayLink", localData);
             location.reload();
           } else {
-            localStorage.setItem("dayLink", JSON.stringify(localData));
+            saveLocalStorage("dayLink", localData);
             location.reload();
           }
         }
@@ -625,10 +624,10 @@ if (input) {
   }
 }
 
-let btnSave = document.querySelector(".posts__button-save");
-let postTextHTML = document.querySelector(".posts__textarea");
-let postData = document.querySelector(".posts__data");
-let localPosts = JSON.parse(localStorage.getItem("localPosts"));
+const btnSave = document.querySelector(".posts__button-save");
+const postTextHTML = document.querySelector(".posts__textarea");
+const postData = document.querySelector(".posts__data");
+let localPosts = getLocalStorage("localPosts");
 
 if (btnSave) {
   postData.textContent = localData.number + " " + localData.month;
@@ -656,28 +655,27 @@ if (btnSave) {
   let changePost = function () {
     if (isPostRepeat() === undefined) {
       localPosts.push(localData);
-      localStorage.setItem("localPosts", JSON.stringify(localPosts));
+      saveLocalStorage("localPosts", localPosts);
     } else {
       isPostRepeat().post = localData.post;
-      localStorage.setItem("localPosts", JSON.stringify(localPosts));
+      saveLocalStorage("localPosts", localPosts);
     }
   };
 
   btnSave.onclick = function () {
     localData.post = postTextHTML.value;
-    console.log(isPostRepeat());
     if (postsArray.length === 0 && postTextHTML.value !== "") {
       postsArray.push(localData);
-      localStorage.setItem("localPosts", JSON.stringify(postsArray));
+      saveLocalStorage("localPosts", postsArray);
       if (localPosts && isPostRepeat() === undefined) {
         localPosts.push(localData);
-        localStorage.setItem("localPosts", JSON.stringify(localPosts));
+        saveLocalStorage("localPosts", localPosts);
       } else changePost();
     }
   };
 }
 
-let allPosts = document.querySelector(".allPosts__content");
+const allPosts = document.querySelector(".allPosts__content");
 
 if (allPosts) {
   let createOnePost = function (data, month, post) {
@@ -713,7 +711,7 @@ if (allPosts) {
 
       localData.number = Number(postData[j].textContent.trim());
       localData.month = postMonth[j].textContent.trim();
-      localStorage.setItem("dayLink", JSON.stringify(localData));
+      saveLocalStorage("dayLink", localData);
     };
   }
 }

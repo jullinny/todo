@@ -57,8 +57,8 @@ body {
 }
 .common-tasks svg {
   fill: rgb(104, 60, 141);
-  width: 30px;
-  height: 30px;
+  width: 45px;
+  height: 45px;
 }
 .common-tasks__body {
   background-image: url(../img/common-tasks-bg.jpg);
@@ -67,11 +67,11 @@ body {
 .all-posts {
   position: absolute;
   top: 5vh;
-  left: 20vw;
+  left: 10vw;
 }
 .all-posts svg {
-  width: 30px;
-  height: 30px;
+  width: 45px;
+  height: 45px;
   fill: rgb(104, 60, 141);
 }
 
@@ -209,18 +209,18 @@ body {
   padding: 5vh 5vw;
 }
 .tasks input {
-  padding: 1.5vw;
+  padding: 1vw;
   padding-left: 4vw;
   border-radius: 30px;
   width: 60vw;
   border: 1px solid plum;
-  font-size: calc(14px + 10 * (100vw - 320px) / 880);
+  font-size: calc(14px + 6 * (100vw - 320px) / 880);
   outline: 0;
 }
 .tasks__btn-add {
   margin-left: 20px;
   font-size: calc(14px + 6 * (100vw - 320px) / 880);
-  padding: 1.5vw;
+  padding: 1vw;
   border-radius: 30px;
   background-color: transparent;
   border: 1px solid rgb(155, 126, 155);
@@ -257,7 +257,7 @@ body {
   padding-right: 5px;
 }
 .tasks__item button {
-  padding: 1.5vw;
+  padding: 1vw;
   border-radius: 30px;
   background-color: transparent;
   border: 1px solid rgb(155, 126, 155);
@@ -275,7 +275,7 @@ body {
   width: 60vw;
   font-size: calc(14px + 6 * (100vw - 320px) / 880);
   font-weight: 600;
-  padding: 1.5vw 2vw;
+  padding: 0.8vw 2vw;
   border-radius: 30px;
   background-color: #fff;
   color: rgb(107, 72, 27);
@@ -292,7 +292,7 @@ body {
   color: rgb(107, 72, 27);
 }
 .tasks__schedule-text {
-  width: 70vw;
+  width: 65vw;
   height: 15vh;
   border-radius: 30px;
   resize: none;
@@ -309,6 +309,13 @@ body {
   border: 1px solid rgba(224, 190, 146, 0.726);
   border-radius: 30px;
   background-color: rgba(255, 255, 255, 0.219);
+}
+.tasks__title {
+  font-size: calc(22px + 4 * (100vw - 320px) / 880);
+  text-align: center;
+  padding-bottom: 2vh;
+  color: rgba(26, 12, 1, 0.5333333333);
+  font-style: italic;
 }
 
 .posts {
@@ -461,7 +468,7 @@ body {
     font-weight: 400;
   }
   .tasks {
-    padding-top: 15vh;
+    padding-top: 11vh;
   }
   .tasks__data-prev:hover {
     transform: translateX(0px);
@@ -469,12 +476,21 @@ body {
   .tasks__data-next:hover {
     transform: translateX(0px);
   }
+  .tasks__btn-add {
+    padding: 0.8vw;
+  }
   .tasks__btn-add:hover {
     background-color: transparent;
   }
   .tasks__btn-add:active {
     transform: scale(1);
     background-color: transparent;
+  }
+  .tasks__schedule-text {
+    width: 70vw;
+  }
+  .tasks input {
+    padding: 1.5vw;
   }
   .tasks__body {
     background-image: url(../img/bg2-phone.jpg);
@@ -491,7 +507,7 @@ body {
     transform: translateX(0px);
   }
   .tasks__link-post {
-    top: -10vh;
+    top: -6vh;
     right: 0;
   }
   .tasks__form {
@@ -546,12 +562,23 @@ body {
     height: 77vh;
     padding: 2vh 3vw;
   }
+  .all-posts {
+    left: 20vw;
+  }
+  .all-posts svg {
+    width: 30px;
+    height: 30px;
+  }
   .allPosts__body {
     background-image: url(../img/allPosts-bg-phone.jpg);
   }
   .tasks__no-task {
     max-width: 65vw;
     font-size: 20px;
+  }
+  .common-tasks svg {
+    width: 30px;
+    height: 30px;
   }
   .common-tasks__body {
     background-image: url(../img/common-tasks-bg.jpg);
