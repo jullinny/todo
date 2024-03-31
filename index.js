@@ -477,13 +477,14 @@ if (input) {
       }
     }
 
+    let firstArr = [];
     if (!allCommonTasksArray && commonTasks) {
-      someArray.push(createTaskObj(task, done));
-      saveLocalStorage("commonTasksArray", someArray);
+      firstArr.push(createTaskObj(task, done));
+      saveLocalStorage("commonTasksArray", firstArr);
     } else if (allCommonTasksArray && commonTasks) {
       if (commonTaskCheck(task, allCommonTasksArray) === false) {
-        someArray.push(createTaskObj(task, done));
-        saveLocalStorage("commonTasksArray", someArray);
+        firstArr.push(createTaskObj(task, done));
+        saveLocalStorage("commonTasksArray", firstArr);
         allCommonTasksArray.push(createTaskObj(task, done));
         saveLocalStorage("commonTasksArray", allCommonTasksArray);
       }
