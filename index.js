@@ -8,10 +8,10 @@ const buttonNext = document.querySelector(".calendar__month-next");
 const dataPage = document.querySelector(".tasks__data-text");
 const input = document.querySelector(".tasks__input");
 const commonTasks = document.querySelector(".common-tasks__body");
+const pageHeight = document.documentElement.scrollHeight;
 let postsArray = [];
 let postText;
 let arrayofDaysDesc = [];
-const pageHeight = document.documentElement.scrollHeight;
 
 const months = [
   {

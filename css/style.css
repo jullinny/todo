@@ -583,4 +583,36 @@ body {
   .common-tasks__body {
     background-image: url(../img/common-tasks-bg.jpg);
   }
+}
+@media (height < 750px) {
+  .calendar__inner {
+    height: 60vh;
+  }
+  .tasks {
+    padding-top: 18vh;
+  }
+  .tasks__link-post {
+    top: -12vh;
+    right: 0;
+  }
+  .posts {
+    padding-top: 15vh;
+  }
+  .posts__button-save {
+    margin-top: 3px;
+  }
+}
+@media (height < 600px) {
+  .calendar__days {
+    margin-top: 2vw;
+  }
+  .calendar__inner {
+    height: 70vh;
+  }
+  .posts {
+    padding-top: 17vh;
+  }
+  .posts__button-save {
+    padding: 5px 10px;
+  }
 }/*# sourceMappingURL=style.css.map */
