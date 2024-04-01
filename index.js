@@ -305,55 +305,39 @@ if (input) {
   if (scheduleHTML) {
     scheduleSaveBtn.onclick = function () {
       let firstArr = [];
-      if (!allScheduleArray) {
+      if (!allScheduleArray && scheduleHTML.value !== '') {
         firstArr.push(createScheduleObj(scheduleHTML.value));
         saveLocalStorage("scheduleLocalArr", firstArr);
       } else {
-        if (
-          scheduleRepeatCheck(createScheduleObj(scheduleHTML.value)) === true
-        ) {
+        if (isNewSchedule(createScheduleObj(scheduleHTML.value)) === false) {
           firstArr.push(createScheduleObj(scheduleHTML.value));
           saveLocalStorage("scheduleLocalArr", firstArr);
           allScheduleArray.push(createScheduleObj(scheduleHTML.value));
           saveLocalStorage("scheduleLocalArr", allScheduleArray);
-        }
-        if (
-          scheduleRepeatCheck(createScheduleObj(scheduleHTML.value)) ===
-          "repeat"
-        ) {
-          scheduleChangeText(createScheduleObj(scheduleHTML.value));
         } 
       }
     };
 
-    let scheduleRepeatCheck = function (text) {
+    let isNewSchedule = function (text) {
       for (let i = 0; i < allScheduleArray.length; i++) {
         if (
-          text.schedule !== allScheduleArray[i].schedule &&
-          text.data !== allScheduleArray[i].data
-        ) {
-          return true;
-        } else if (
-          text.schedule !== allScheduleArray[i].schedule &&
           text.data === allScheduleArray[i].data
         ) {
-          return "repeat";
-        }
+          if (text.schedule === allScheduleArray[i].schedule) {
+            return;
+          } else if (text.schedule === '') {
+            allScheduleArray.splice(i, 1);
+            saveLocalStorage("scheduleLocalArr", allScheduleArray);
+            return;
+          }
+          else {
+            allScheduleArray[i].schedule = text.schedule;
+            saveLocalStorage("scheduleLocalArr", allScheduleArray);
+          return;
+          }
+        } 
       }
       return false;
-    };
-
-    let scheduleChangeText = function (text) {
-      for (let i = 0; i < allScheduleArray.length; i++) {
-        if (
-          text.data === allScheduleArray[i].data
-        ) {
-          allScheduleArray[i].schedule = text.schedule;
-          allScheduleArray.push(createScheduleObj(scheduleHTML.value));
-          saveLocalStorage("scheduleLocalArr", allScheduleArray);
-          return;
-        }
-      }
     };
 
     if (allScheduleArray) {
@@ -384,6 +368,9 @@ if (input) {
       noTask.innerHTML = `Задач на сегодня нет`;
       tasksContentHTML.appendChild(noTask);
       noTask.classList.remove("display-none");
+      if (commonTasks) {
+        noTask.innerHTML = `Задач нет`;
+      }
     } else {
       noTask.classList.add("display-none");
     }
